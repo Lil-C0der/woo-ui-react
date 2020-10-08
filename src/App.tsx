@@ -21,7 +21,7 @@ function App() {
         disabled
       </Button>
 
-      <Button disabled btnType={ButtonType.Dash}>
+      <Button disabled btnType={ButtonType.Dashed}>
         Dash Disabled
       </Button>
 
@@ -37,16 +37,16 @@ function App() {
         Large Primary
       </Button>
 
-      <Button btnType={ButtonType.Link} href="http://baidu.com" target="_blank">
+      <Button btnType={ButtonType.Link} href="http://baidu.com">
         Baidu Link
       </Button>
 
       <Button btnType={ButtonType.Link} disabled>
-        disabled Link
+        disabled
       </Button>
 
       <Button btnType={ButtonType.Link} href="http://baidu.com" disabled>
-        disabled Baidu
+        disabled
       </Button>
     </div>
   );

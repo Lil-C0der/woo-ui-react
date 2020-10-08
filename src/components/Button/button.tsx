@@ -15,7 +15,7 @@ export enum ButtonSize {
 export enum ButtonType {
   Normal = 'normal',
   Primary = 'primary',
-  Dash = 'dashed',
+  Dashed = 'dashed',
   Success = 'success',
   Warn = 'warn',
   Danger = 'danger',
@@ -36,7 +36,7 @@ type NativeButtonProps = BaseButtonProps & ButtonHTMLAttributes<HTMLElement>;
 type AnchorButtonProps = BaseButtonProps & AnchorHTMLAttributes<HTMLElement>;
 
 // 利用工具泛型 Partial 将组件所有的 props 变为可选的
-type ButtonProps = Partial<NativeButtonProps & AnchorButtonProps>;
+export type ButtonProps = Partial<NativeButtonProps & AnchorButtonProps>;
 // export type ButtonProps = Partial<NativeButtonProps & AnchorButtonProps>;
 
 // 重新定义类型后，可以获取到原生的属性，例如 onCLick 等
