@@ -7,6 +7,7 @@
   align-items: center;
   vertical-align: middle;
   @include button-size(1.14em, $button-height, $font-size, $border-radius);
+  font-family: $font-family-base;
   border: 1px solid $border-color;
   background-color: $button-bg;
   box-shadow: $button-box-shadow;
@@ -19,13 +20,6 @@
     $border-color,
     $border-color-hover
   );
-  &[disabled] {
-    color: $disabled-color;
-    border-color: $border-color-disabled;
-    background-color: $button-bg-disabled;
-    box-shadow: none;
-    cursor: not-allowed;
-  }
 }
 
 .woo-button-sm {
@@ -38,6 +32,11 @@
 .woo-button-disabled,
 .woo-button-disabled:hover,
 .woo-button-disabled:active {
+  color: $disabled-color;
+  border-color: $border-color-disabled;
+  background-color: $button-bg-disabled;
+  box-shadow: none;
+  cursor: not-allowed;
 }
 
 .woo-button-dashed {
@@ -100,7 +99,6 @@
   }
   &.woo-button-disabled {
     color: $disabled-color;
-    background-color: transparent;
     border-color: $border-color-disabled;
     cursor: not-allowed;
     + a {
