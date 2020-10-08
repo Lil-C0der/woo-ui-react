@@ -1,0 +1,110 @@
+@import '../../styles/var';
+@import '../../styles/mixins';
+
+.woo-button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  vertical-align: middle;
+  @include button-size(1.14em, $button-height, $font-size, $border-radius);
+  border: 1px solid $border-color;
+  background-color: $button-bg;
+  box-shadow: $button-box-shadow;
+  transition: all 0.15s ease-in-out;
+  cursor: pointer;
+  @include button-style(
+    $button-bg,
+    $color-black,
+    $color-white,
+    $border-color,
+    $border-color-hover
+  );
+  &[disabled] {
+    color: $disabled-color;
+    border-color: $border-color-disabled;
+    background-color: $button-bg-disabled;
+    box-shadow: none;
+    cursor: not-allowed;
+  }
+}
+
+.woo-button-sm {
+  @include button-size(0.57em, $button-height-sm, 14px, 4px);
+}
+.woo-button-lg {
+  @include button-size(1.5em, $button-height-lg, 16px, 6px);
+}
+
+.woo-button-disabled,
+.woo-button-disabled:hover,
+.woo-button-disabled:active {
+}
+
+.woo-button-dashed {
+  border-style: dashed;
+}
+
+.woo-button-primary:not(.woo-button-disabled) {
+  @include button-style(
+    $button-bg-primary,
+    $color-black,
+    $color-white,
+    $border-color,
+    $border-color-hover
+  );
+}
+.woo-button-success:not(.woo-button-disabled) {
+  @include button-style(
+    $button-bg-success,
+    $color-black,
+    $color-white,
+    $border-color,
+    $border-color-hover
+  );
+}
+.woo-button-danger:not(.woo-button-disabled) {
+  @include button-style(
+    $button-bg-danger,
+    $color-black,
+    $color-white,
+    $border-color,
+    $border-color-hover
+  );
+}
+.woo-button-warn:not(.woo-button-disabled) {
+  @include button-style(
+    $button-bg-warn,
+    $color-black,
+    $color-white,
+    $border-color,
+    $border-color-hover
+  );
+}
+
+.woo-button-link {
+  color: $color-link;
+  text-decoration: none;
+  box-shadow: none;
+  border: none;
+  background-color: transparent;
+  border-radius: 0;
+  border-bottom: 2px solid $color-link;
+  &:hover,
+  &:focus {
+    background-color: transparent;
+    color: $color-link-hover;
+    border-bottom: 2px solid $color-link-hover;
+  }
+  &:active {
+    color: $color-link-active;
+  }
+  &.woo-button-disabled {
+    color: $disabled-color;
+    background-color: transparent;
+    border-color: $border-color-disabled;
+    cursor: not-allowed;
+    + a {
+      pointer-events: none;
+    }
+  }
+}

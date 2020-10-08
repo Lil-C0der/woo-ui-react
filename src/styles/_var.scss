@@ -14,8 +14,11 @@ $color-black: #333;
 $color-grey: #5c5c5c;
 $color-white: #fefefe;
 $disabled-color: #a0a0a0;
-$link-color: #61dafb;
-$code-color: #e2a5ad;
+$color-link: $blue;
+$color-link-hover: darken($color-link, 15%);
+$color-link-active: darken($color-link, 20%);
+
+$color-code: $pink;
 
 // 边框颜色
 $border-color: #dedde2;
@@ -24,22 +27,16 @@ $border-color-hover: #c0c4cc;
 $border-color-disabled: #c3c3c3;
 
 // button 相关的样式
+$button-height: $height;
+$button-height-sm: 24px;
+$button-height-lg: 40px;
+
 $button-bg: $white;
-$button-bg-hover: darken($button-bg, 1.5%);
-$button-bg-active: darken($button-bg, 14.5%);
 $button-bg-disabled: #ebebeb;
 $button-bg-primary: $blue;
-$button-bg-primary-hover: darken($button-bg-primary, 1.5%);
-$button-bg-primary-active: darken($button-bg-primary, 14.5%);
 $button-bg-success: $green;
-$button-bg-success-hover: darken($button-bg-success, 1.5%);
-$button-bg-success-active: darken($button-bg-success, 14.5%);
 $button-bg-warn: $yellow;
-$button-bg-warn-hover: darken($button-bg-warn, 1.5%);
-$button-bg-warn-active: darken($button-bg-warn, 14.5%);
 $button-bg-danger: $pink;
-$button-bg-danger-hover: darken($button-bg-danger, 1.5%);
-$button-bg-danger-active: darken($button-bg-danger, 14.5%);
 
 $slide-item-bg-active: rgba(0, 0, 0, 0.5);
 

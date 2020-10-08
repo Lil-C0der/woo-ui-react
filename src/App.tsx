@@ -1,22 +1,53 @@
 import React from 'react';
-import './App.css';
+import Button, { ButtonSize, ButtonType } from './components/Button/button';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Button
+        onClick={(e) => {
+          console.log(e.target);
+        }}
+      >
+        click
+      </Button>
+
+      <Button
+        disabled
+        onClick={(e) => {
+          console.log(e);
+        }}
+      >
+        disabled
+      </Button>
+
+      <Button disabled btnType={ButtonType.Dash}>
+        Dash Disabled
+      </Button>
+
+      <Button disabled btnType={ButtonType.Primary}>
+        Primary Disabled
+      </Button>
+
+      <Button btnType={ButtonType.Danger} size={ButtonSize.Small}>
+        Small Danger
+      </Button>
+
+      <Button btnType={ButtonType.Primary} size={ButtonSize.Large}>
+        Large Primary
+      </Button>
+
+      <Button btnType={ButtonType.Link} href="http://baidu.com" target="_blank">
+        Baidu Link
+      </Button>
+
+      <Button btnType={ButtonType.Link} disabled>
+        disabled Link
+      </Button>
+
+      <Button btnType={ButtonType.Link} href="http://baidu.com" disabled>
+        disabled Baidu
+      </Button>
     </div>
   );
 }
