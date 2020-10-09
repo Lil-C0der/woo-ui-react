@@ -1,21 +1,21 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
-import Button, { ButtonSize, ButtonType, ButtonProps } from './button';
+import Button, { ButtonSize, ButtonType, IButtonProps } from './button';
 
 const defaultProps = {
   onClick: jest.fn()
 };
 
-const testSizeProp: ButtonProps = {
+const testSizeProp: IButtonProps = {
   size: ButtonSize.Small
 };
-const testTypeProp: ButtonProps = {
+const testTypeProp: IButtonProps = {
   btnType: ButtonType.Danger
 };
-const testClassNameProp: ButtonProps = {
+const testClassNameProp: IButtonProps = {
   className: 'button_test'
 };
-const testDisableProp: ButtonProps = {
+const testDisableProp: IButtonProps = {
   disabled: true,
   onClick: jest.fn()
 };

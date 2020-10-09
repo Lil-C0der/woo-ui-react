@@ -22,7 +22,7 @@ export enum ButtonType {
   Link = 'link'
 }
 
-export interface BaseButtonProps {
+export interface IBaseButtonProps {
   className?: string;
   disabled?: boolean;
   size?: ButtonSize;
@@ -31,16 +31,16 @@ export interface BaseButtonProps {
   children: ReactNode;
 }
 
-// 组件的类型应该是 BaseButtonProps 加上 NativeButtonProps
-type NativeButtonProps = BaseButtonProps & ButtonHTMLAttributes<HTMLElement>;
-type AnchorButtonProps = BaseButtonProps & AnchorHTMLAttributes<HTMLElement>;
+// 组件的类型应该是 IBaseButtonProps 加上 NativeButtonProps
+type NativeButtonProps = IBaseButtonProps & ButtonHTMLAttributes<HTMLElement>;
+type AnchorButtonProps = IBaseButtonProps & AnchorHTMLAttributes<HTMLElement>;
 
 // 利用工具泛型 Partial 将组件所有的 props 变为可选的
-export type ButtonProps = Partial<NativeButtonProps & AnchorButtonProps>;
+export type IButtonProps = Partial<NativeButtonProps & AnchorButtonProps>;
 // export type ButtonProps = Partial<NativeButtonProps & AnchorButtonProps>;
 
 // 重新定义类型后，可以获取到原生的属性，例如 onCLick 等
-const Button: FC<ButtonProps> = (props) => {
+const Button: FC<IButtonProps> = (props) => {
   const {
     className,
     btnType,
