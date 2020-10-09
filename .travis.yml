@@ -1,0 +1,20 @@
+language: node_js
+node_js:
+  - 'stable'
+cache:
+  directories:
+    - node_modules
+env:
+  - CI=true
+addons:
+  chrome: stable
+sudo: required
+before_script:
+  - 'sudo chown root /opt/google/chrome/chrome-sandbox'
+  - 'sudo chmod 4755 /opt/google/chrome/chrome-sandbox'
+
+script:
+  - npm run test
+
+after_success:
+  - npm run coverall
