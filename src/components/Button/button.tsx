@@ -6,9 +6,9 @@ import React, {
 } from 'react';
 import classNames from 'classnames';
 
-export type ButtonSize = 'lg' | 'sm';
+type ButtonSize = 'lg' | 'sm';
 
-export type ButtonType =
+type ButtonType =
   | 'normal'
   | 'primary'
   | 'dashed'

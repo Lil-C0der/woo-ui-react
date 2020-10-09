@@ -1,16 +1,16 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
-import Button, { ButtonSize, ButtonType, IButtonProps } from './button';
+import Button, { IButtonProps } from './button';
 
 const defaultProps = {
   onClick: jest.fn()
 };
 
 const testSizeProp: IButtonProps = {
-  size: ButtonSize.Small
+  size: 'sm'
 };
 const testTypeProp: IButtonProps = {
-  btnType: ButtonType.Danger
+  btnType: 'danger'
 };
 const testClassNameProp: IButtonProps = {
   className: 'button_test'
@@ -49,7 +49,7 @@ describe('Button 组件', () => {
 
   it('btnType 为 link 且设置了 href 属性时可以渲染成 a 标签', () => {
     const wrapper = render(
-      <Button btnType={ButtonType.Link} href="http://www.google.com">
+      <Button btnType={'link'} href="http://www.google.com">
         Link
       </Button>
     );
