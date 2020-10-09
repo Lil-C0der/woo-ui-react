@@ -1,0 +1,44 @@
+.woo-menu {
+  display: flex;
+  box-sizing: border-box;
+  padding-left: 32px;
+  border-bottom: 1px solid $border-color;
+  &-item {
+    display: flex;
+    color: $color-black;
+    height: 100%;
+    position: relative;
+    padding: 0 16px;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    &:hover {
+      color: $tab-active-color;
+    }
+    &-active {
+      color: $tab-active-color;
+      font-weight: 700;
+      &::after {
+        content: '';
+        display: block;
+        position: absolute;
+        width: 100%;
+        height: 4px;
+        bottom: -1px;
+        background-color: $tab-active-color;
+      }
+    }
+    &-disabled {
+      color: $disabled-color;
+      pointer-events: none;
+      cursor: default;
+    }
+  }
+}
+
+.woo-menu-vertical {
+  flex-direction: column;
+  .woo-menu-item {
+    justify-content: flex-start;
+  }
+}

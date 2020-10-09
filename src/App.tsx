@@ -1,10 +1,13 @@
 import React from 'react';
-import Button, { ButtonSize, ButtonType } from './components/Button/button';
+import Button from './components/Button/button';
+import Menu from './components/Menu/menu';
+import MenuItem from './components/Menu/menuItem';
 
 function App() {
   return (
     <div className="App">
       <Button
+        style={{ fontSize: '20px', marginBottom: '20px' }}
         onClick={(e) => {
           console.log(e.target);
         }}
@@ -12,42 +15,37 @@ function App() {
         click
       </Button>
 
-      <Button
-        disabled
-        onClick={(e) => {
-          console.log(e);
+      <Menu
+        selectIndex="item_2"
+        onSelect={(index) => {
+          console.log(index);
         }}
+        style={{ height: '48px' }}
       >
-        disabled
-      </Button>
+        <MenuItem index="item_0">menu item 1</MenuItem>
+        <MenuItem disabled index="item_1">
+          menu item 2
+        </MenuItem>
+        <MenuItem index="item_2">menu item 3</MenuItem>
+        <MenuItem index="item_3">menu item 4</MenuItem>
+        <MenuItem index="item_5">menu item 5</MenuItem>
+      </Menu>
 
-      <Button disabled btnType={ButtonType.Dashed}>
-        Dash Disabled
-      </Button>
-
-      <Button disabled btnType={ButtonType.Primary}>
-        Primary Disabled
-      </Button>
-
-      <Button btnType={ButtonType.Danger} size={ButtonSize.Small}>
-        Small Danger
-      </Button>
-
-      <Button btnType={ButtonType.Primary} size={ButtonSize.Large}>
-        Large Primary
-      </Button>
-
-      <Button btnType={ButtonType.Link} href="http://baidu.com">
-        Baidu Link
-      </Button>
-
-      <Button btnType={ButtonType.Link} disabled>
-        disabled
-      </Button>
-
-      <Button btnType={ButtonType.Link} href="http://baidu.com" disabled>
-        disabled
-      </Button>
+      <Menu
+        selectIndex="item_2"
+        onSelect={(index) => {
+          console.log(index);
+        }}
+        vertical
+      >
+        <MenuItem index="item_0">menu item 1</MenuItem>
+        <MenuItem disabled index="item_1">
+          menu item 2
+        </MenuItem>
+        <MenuItem index="item_2">menu item 3</MenuItem>
+        <MenuItem index="item_3">menu item 4</MenuItem>
+        <MenuItem index="item_5">menu item 5</MenuItem>
+      </Menu>
     </div>
   );
 }
