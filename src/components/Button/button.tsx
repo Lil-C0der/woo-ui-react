@@ -6,21 +6,16 @@ import React, {
 } from 'react';
 import classNames from 'classnames';
 
-// 导出两个枚举类型
-export enum ButtonSize {
-  Large = 'lg',
-  Small = 'sm'
-}
+export type ButtonSize = 'lg' | 'sm';
 
-export enum ButtonType {
-  Normal = 'normal',
-  Primary = 'primary',
-  Dashed = 'dashed',
-  Success = 'success',
-  Warn = 'warn',
-  Danger = 'danger',
-  Link = 'link'
-}
+export type ButtonType =
+  | 'normal'
+  | 'primary'
+  | 'dashed'
+  | 'success'
+  | 'warn'
+  | 'danger'
+  | 'link';
 
 export interface IBaseButtonProps {
   className?: string;
@@ -31,7 +26,7 @@ export interface IBaseButtonProps {
   children: ReactNode;
 }
 
-// 组件的类型应该是 IBaseButtonProps 加上 NativeButtonProps
+// 组件的类型应该是 IBaseButtonProps 加上原生的类型属性
 type NativeButtonProps = IBaseButtonProps & ButtonHTMLAttributes<HTMLElement>;
 type AnchorButtonProps = IBaseButtonProps & AnchorHTMLAttributes<HTMLElement>;
 
@@ -57,7 +52,7 @@ const Button: FC<IButtonProps> = (props) => {
     'woo-button-disabled': disabled
   });
 
-  if (btnType === ButtonType.Link && href) {
+  if (btnType === 'link' && href) {
     // 如果type 为 link 显示为 a 标签
     return (
       <a className={classes} href={href} {...restProps}>
@@ -75,7 +70,7 @@ const Button: FC<IButtonProps> = (props) => {
 
 Button.defaultProps = {
   disabled: false,
-  btnType: ButtonType.Normal
+  btnType: 'normal'
 };
 
 export default Button;
