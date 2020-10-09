@@ -21,8 +21,15 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "lint": "eslint --ext js,ts,tsx src --max-warnings 5",
+    "test:nowatch": "cross-env CI=true react-scripts test",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run test:nowatch && npm run lint"
+    }
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -38,5 +45,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.2",
+    "husky": "^4.3.0"
   }
 }
