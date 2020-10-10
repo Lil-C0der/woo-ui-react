@@ -6,7 +6,7 @@
   &-item {
     display: flex;
     color: $color-black;
-    height: 100%;
+    height: 48px;
     position: relative;
     padding: 0 16px;
     justify-content: center;
@@ -38,7 +38,16 @@
 
 .woo-menu-vertical {
   flex-direction: column;
+  border-bottom: none;
+  border-right: 1px solid $border-color;
   .woo-menu-item {
     justify-content: flex-start;
+    &-active {
+      &::after {
+        width: 4px;
+        height: 100%;
+        right: -1px;
+      }
+    }
   }
 }
