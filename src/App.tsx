@@ -16,34 +16,40 @@ function App() {
       </Button>
 
       <Menu
-        selectIndex="item_2"
+        selectedIndex="item_3"
         onSelect={(index) => {
-          console.log(index);
+          console.log('选中了', index);
         }}
-        style={{ height: '48px' }}
+        onClick={(index) => {
+          console.log('点击了', index);
+        }}
       >
-        <MenuItem index="item_0">menu item 1</MenuItem>
-        <MenuItem disabled index="item_1">
+        <MenuItem index="item_1">menu item 1</MenuItem>
+        <MenuItem disabled index="item_2">
           menu item 2
         </MenuItem>
-        <MenuItem index="item_2">menu item 3</MenuItem>
-        <MenuItem index="item_3">menu item 4</MenuItem>
+        <MenuItem index="item_3">menu item 3</MenuItem>
+        <MenuItem index="item_4">menu item 4</MenuItem>
         <MenuItem index="item_5">menu item 5</MenuItem>
       </Menu>
 
       <Menu
-        selectIndex="item_2"
+        selectedIndex="item_3"
         onSelect={(index) => {
-          console.log(index);
+          console.log('选中了', index);
+        }}
+        onClick={(index) => {
+          console.log('点击了', index);
         }}
         vertical
+        style={{ width: 256, marginTop: 30 }}
       >
-        <MenuItem index="item_0">menu item 1</MenuItem>
-        <MenuItem disabled index="item_1">
+        <MenuItem index="item_1">menu item 1</MenuItem>
+        <MenuItem disabled index="item_2">
           menu item 2
         </MenuItem>
-        <MenuItem index="item_2">menu item 3</MenuItem>
-        <MenuItem index="item_3">menu item 4</MenuItem>
+        <MenuItem index="item_3">menu item 3</MenuItem>
+        <MenuItem index="item_4">menu item 4</MenuItem>
         <MenuItem index="item_5">menu item 5</MenuItem>
       </Menu>
     </div>
