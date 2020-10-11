@@ -28,6 +28,7 @@ const testVerticalProps: IMenuProps = {
 
 const renderMenu = (props: IMenuProps) => (
   <Menu {...props}>
+    <div>extra element</div>
     <MenuItem index="item_0">item_0</MenuItem>
     <MenuItem index="item_1">active</MenuItem>
     <MenuItem index="item_2" disabled>
