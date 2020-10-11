@@ -2,8 +2,8 @@ import React, { CSSProperties, FC, createContext, useState } from 'react';
 import classNames from 'classnames';
 import { IMenuItemProps } from './menuItem';
 
-type SelectCallback = (selectIndex: string) => void;
-type ClickCallback = (clickIndex: string) => void;
+type SelectCallback = (selectIndex: string, e: React.MouseEvent) => void;
+type ClickCallback = (clickIndex: string, e: React.MouseEvent) => void;
 export interface IMenuProps {
   selectedIndex?: string;
   vertical?: boolean;
@@ -16,12 +16,14 @@ export interface IMenuProps {
 // context 的接口
 interface IMenuContext {
   selectedIndex: IMenuProps['selectedIndex'];
+  vertical: IMenuProps['vertical'];
   onItemClick?: ClickCallback;
 }
 
 // 创建的 context 对象
 export const MenuContext = createContext<IMenuContext>({
-  selectedIndex: 'item_0'
+  selectedIndex: 'item_0',
+  vertical: false
 });
 
 const Menu: FC<IMenuProps> = (props) => {
@@ -43,11 +45,11 @@ const Menu: FC<IMenuProps> = (props) => {
   const [currSelectedIdx, setSelectIdx] = useState(selectedIndex);
 
   // 处理 item 的点击事件
-  const onItemClick = (index: string) => {
-    onClick && onClick(index);
+  const onItemClick = (index: string, e: React.MouseEvent) => {
+    onClick && onClick(index, e);
     // 重复点击同一个 item 只能触发一次 select
     if (index !== currSelectedIdx) {
-      onSelect && onSelect(index);
+      onSelect && onSelect(index, e);
     }
     setSelectIdx(index);
   };
@@ -55,6 +57,7 @@ const Menu: FC<IMenuProps> = (props) => {
   // 传递给子组件的 context
   const passedContext: IMenuContext = {
     selectedIndex: currSelectedIdx,
+    vertical,
     onItemClick
   };
 

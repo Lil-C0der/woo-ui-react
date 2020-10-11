@@ -19,9 +19,9 @@ const MenuItem: FC<IMenuItemProps> = (props) => {
     'woo-menu-item-active': index === selectedIndex
   });
 
-  const onClick = () => {
+  const onClick = (e: React.MouseEvent) => {
     // 在 Menu 组件中的 onItemClick 中区分 click 和 select
-    !disabled && index && onItemClick && onItemClick(index);
+    !disabled && index && onItemClick && onItemClick(index, e);
   };
 
   return (
