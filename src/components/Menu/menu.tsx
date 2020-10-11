@@ -60,12 +60,25 @@ const Menu: FC<IMenuProps> = (props) => {
 
   // 只渲染子元素中 displayName 为 MenuItem 的元素
   const renderChildren = () => {
+    // 统计不为 MenuItem 的元素，用于计算默认的 index
+    let otherElCount = 0;
+
     return React.Children.map(children, (child, i) => {
       let childEl = child as React.FunctionComponentElement<IMenuItemProps>;
+      const { index } = childEl.props;
       const { displayName } = childEl.type;
+
       if (displayName === 'MenuItem') {
+        if (!index) {
+          // 对于未设置 index 的 menu-item，clone 一份，并添加一个默认的 index
+          // 默认的 index 要注意减去其他元素的数目
+          childEl = React.cloneElement(childEl, {
+            index: `item_${i - otherElCount}`
+          });
+        }
         return childEl;
       } else {
+        otherElCount++;
         console.error(`Warning: Menu's child must be a Menu Item`);
       }
     });

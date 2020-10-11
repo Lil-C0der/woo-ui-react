@@ -9,6 +9,7 @@ import Menu, { IMenuProps } from './menu';
 import MenuItem, { IMenuItemProps } from './menuItem';
 
 const testProps: IMenuProps = {
+  // 默认选中第二个 item，即文本为 active 的 item
   selectedIndex: 'item_1',
   className: 'menu_test',
   onClick: jest.fn(),
@@ -29,12 +30,10 @@ const testVerticalProps: IMenuProps = {
 const renderMenu = (props: IMenuProps) => (
   <Menu {...props}>
     <div>extra element</div>
-    <MenuItem index="item_0">item_0</MenuItem>
-    <MenuItem index="item_1">active</MenuItem>
-    <MenuItem index="item_2" disabled>
-      disabled
-    </MenuItem>
-    <MenuItem index="item_3">item_3</MenuItem>
+    <MenuItem>item_0</MenuItem>
+    <MenuItem>active</MenuItem>
+    <MenuItem disabled>disabled</MenuItem>
+    <MenuItem>item_3</MenuItem>
   </Menu>
 );
 

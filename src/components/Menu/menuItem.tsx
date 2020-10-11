@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { MenuContext } from './menu';
 
 export interface IMenuItemProps {
-  index: string;
+  index?: string;
   disabled?: boolean;
   className?: string;
   style?: CSSProperties;
@@ -21,7 +21,7 @@ const MenuItem: FC<IMenuItemProps> = (props) => {
 
   const onClick = () => {
     // 在 Menu 组件中的 onItemClick 中区分 click 和 select
-    !disabled && onItemClick && onItemClick(index);
+    !disabled && index && onItemClick && onItemClick(index);
   };
 
   return (
