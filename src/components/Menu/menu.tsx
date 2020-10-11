@@ -1,5 +1,6 @@
 import React, { CSSProperties, FC, createContext, useState } from 'react';
 import classNames from 'classnames';
+import { IMenuItemProps } from './menuItem';
 
 type SelectCallback = (selectIndex: string) => void;
 type ClickCallback = (clickIndex: string) => void;
@@ -38,6 +39,7 @@ const Menu: FC<IMenuProps> = (props) => {
     'woo-menu-vertical': vertical
   });
 
+  // 用 useState hook 来控制 selected-index
   const [currSelectedIdx, setSelectIdx] = useState(selectedIndex);
 
   // 处理 item 的点击事件
@@ -56,10 +58,23 @@ const Menu: FC<IMenuProps> = (props) => {
     onItemClick
   };
 
+  // 只渲染子元素中 displayName 为 MenuItem 的元素
+  const renderChildren = () => {
+    return React.Children.map(children, (child, i) => {
+      let childEl = child as React.FunctionComponentElement<IMenuItemProps>;
+      const { displayName } = childEl.type;
+      if (displayName === 'MenuItem') {
+        return childEl;
+      } else {
+        console.error(`Warning: Menu's child must be a Menu Item`);
+      }
+    });
+  };
+
   return (
     <ul className={classes} style={style}>
       <MenuContext.Provider value={passedContext}>
-        {children}
+        {renderChildren()}
       </MenuContext.Provider>
     </ul>
   );
