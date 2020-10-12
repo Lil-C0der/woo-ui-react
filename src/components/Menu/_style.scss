@@ -55,6 +55,19 @@
 .woo-submenu {
   position: relative;
   cursor: pointer;
+  & .has-active-item {
+    color: $active-menu-item-color;
+    font-weight: 700;
+    &::after {
+      content: '';
+      display: block;
+      position: absolute;
+      width: 100%;
+      height: 4px;
+      bottom: -1px;
+      background-color: $active-menu-item-color;
+    }
+  }
   .woo-submenu-title {
     display: flex;
     align-items: center;

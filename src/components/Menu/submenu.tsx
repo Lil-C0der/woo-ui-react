@@ -31,13 +31,14 @@ const Submenu: FC<ISubmenuProps> = (props) => {
   const { index, title, children, className, style } = props;
   const [isOpen, setIsOpen] = useState(false);
   // context
-  const { vertical } = useContext(MenuContext);
+  const { selectedIndex, vertical } = useContext(MenuContext);
   // 类似 Vue 递归组件
   const { parentIndex } = useContext(SubmenuContext);
   // ref
   const submenuDOMRef = useRef<HTMLLIElement>(null);
   const isOpenRef = useRef<boolean>(false);
 
+  // 给 document 添加 click outside 的监听
   useEffect(() => {
     const onDocClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
@@ -52,7 +53,9 @@ const Submenu: FC<ISubmenuProps> = (props) => {
     return () => {
       window.document.onclick = () => false;
     };
-  }, [isOpen]);
+  }, []);
+
+  let childrenIdxArr: Array<string> = [];
 
   const openPopper = () => {
     setIsOpen(true);
@@ -90,6 +93,9 @@ const Submenu: FC<ISubmenuProps> = (props) => {
             index: `${props.index}_${i - otherElCount}`
           });
         }
+        // 子组件如果没有 index 会添加默认 index，所以使用了类型断言
+        childrenIdxArr.push(childEl.props.index as string);
+
         return childEl;
       } else {
         otherElCount++;
@@ -98,7 +104,12 @@ const Submenu: FC<ISubmenuProps> = (props) => {
     });
   };
 
-  const classes = classNames('woo-submenu', className);
+  // submenu wrapper 的 className
+  const classes = classNames('woo-submenu', className, {
+    // TODO renderChildren 方法在渲染时才被调用，所以这里的 childrenIdxArr 是空数组
+    'has-active-item': childrenIdxArr.includes(selectedIndex as string)
+  });
+  // popper 的 className
   const popperClasses = classNames(
     'woo-submenu-list',
     vertical ? 'woo-submenu-vertical' : 'woo-submenu-popper'
