@@ -35,34 +35,42 @@ const Submenu: FC<ISubmenuProps> = (props) => {
   // 类似 Vue 递归组件
   const { parentIndex } = useContext(SubmenuContext);
   // ref
-  const titleDOMRef = useRef<HTMLDivElement>(null);
+  const submenuDOMRef = useRef<HTMLLIElement>(null);
   const isOpenRef = useRef<boolean>(false);
 
   useEffect(() => {
-    const closePopper = (e: MouseEvent) => {
-      const { target } = e;
-      // 点击除了 popper 以外的地方则关闭 popper
-      // 状态 isOpen 用了一个 ref 来获取最新的值
-      if (target !== titleDOMRef.current && isOpenRef.current) {
-        setTimeout(() => {
-          setIsOpen(false);
-          isOpenRef.current = false;
-        }, 300);
+    const onDocClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      // 点击页面其他地方时关闭 popper
+      if (!submenuDOMRef.current?.contains(target)) {
+        closePopper();
       }
     };
 
-    window.document.addEventListener('click', closePopper);
+    // 确保 document 只有一个监听器
+    window.document.onclick = onDocClick;
     return () => {
-      window.document.removeEventListener('click', closePopper);
+      window.document.onclick = () => false;
     };
-  }, []);
+  }, [isOpen]);
 
-  const openPopper = (e: React.MouseEvent) => {
-    const { target } = e;
-    // 点击 title 时，打开 popper
-    if (target === titleDOMRef.current) {
-      setIsOpen(true);
-      isOpenRef.current = true;
+  const openPopper = () => {
+    setIsOpen(true);
+    isOpenRef.current = true;
+  };
+
+  const closePopper = () => {
+    setIsOpen(false);
+    isOpenRef.current = false;
+  };
+
+  const onSubmenuClick = (e: React.MouseEvent) => {
+    const target = e.target as HTMLElement;
+
+    if (!target.className.includes('woo-menu-item')) {
+      openPopper();
+    } else {
+      closePopper();
     }
   };
 
@@ -106,13 +114,10 @@ const Submenu: FC<ISubmenuProps> = (props) => {
     <li
       className={classes}
       style={style}
-      onClick={(e: React.MouseEvent) => {
-        openPopper(e);
-      }}
+      onClick={onSubmenuClick}
+      ref={submenuDOMRef}
     >
-      <div className="woo-submenu-title" ref={titleDOMRef}>
-        {title}
-      </div>
+      <div className="woo-submenu-title">{title}</div>
       {/* 这个 context 传递 parentIndex */}
       <SubmenuContext.Provider value={passedContext}>
         <ul style={isOpen ? {} : { display: 'none' }} className={popperClasses}>
