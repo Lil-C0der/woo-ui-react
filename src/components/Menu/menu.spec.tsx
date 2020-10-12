@@ -65,7 +65,13 @@ describe('Menu 组件', () => {
   it('点击 item 能触发回调', () => {
     const firstItemEl = wrapper.getByText('item_0');
     fireEvent.click(firstItemEl);
-    expect(testProps.onClick).toHaveBeenCalledWith('item_0');
+    expect(testProps.onClick).toHaveBeenCalledWith(
+      'item_0',
+      // RTL 貌似不能捕获到事件对象 e，所以第二个参数改成 expect 一个对象
+      // https://stackoverflow.com/questions/63735881/react-jest-testing-mock-a-click-event-object
+      expect.any(Object)
+    );
+
     expect(firstItemEl).toHaveClass('woo-menu-item-active');
   });
 
