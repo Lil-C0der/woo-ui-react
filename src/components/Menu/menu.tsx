@@ -1,9 +1,21 @@
-import React, { CSSProperties, FC, createContext, useState } from 'react';
+import React, {
+  CSSProperties,
+  FC,
+  FunctionComponentElement,
+  useState
+} from 'react';
 import classNames from 'classnames';
 import { IMenuItemProps } from './menuItem';
+import { ISubmenuProps } from './submenu';
 
 type SelectCallback = (selectIndex: string, e: React.MouseEvent) => void;
-type ClickCallback = (clickIndex: string, e: React.MouseEvent) => void;
+// click 回调的参数 path 表示 item 的完整 index 路径
+type ClickCallback = (
+  clickIndex: string,
+  indexPath: Array<string>,
+  e: React.MouseEvent
+) => void;
+
 export interface IMenuProps {
   selectedIndex?: string;
   vertical?: boolean;
@@ -13,6 +25,11 @@ export interface IMenuProps {
   onClick?: ClickCallback;
 }
 
+// 子组件实例类型
+export type childrenComponenet = FunctionComponentElement<
+  ISubmenuProps | IMenuItemProps
+>;
+
 // context 的接口
 interface IMenuContext {
   selectedIndex: IMenuProps['selectedIndex'];
@@ -21,7 +38,7 @@ interface IMenuContext {
 }
 
 // 创建的 context 对象
-export const MenuContext = createContext<IMenuContext>({
+export const MenuContext = React.createContext<IMenuContext>({
   selectedIndex: 'item_0',
   vertical: false
 });
@@ -45,8 +62,12 @@ const Menu: FC<IMenuProps> = (props) => {
   const [currSelectedIdx, setSelectIdx] = useState(selectedIndex);
 
   // 处理 item 的点击事件
-  const onItemClick = (index: string, e: React.MouseEvent) => {
-    onClick && onClick(index, e);
+  const onItemClick = (
+    index: string,
+    path: Array<string>,
+    e: React.MouseEvent
+  ) => {
+    onClick && onClick(index, path, e);
     // 重复点击同一个 item 只能触发一次 select
     if (index !== currSelectedIdx) {
       onSelect && onSelect(index, e);
@@ -61,17 +82,17 @@ const Menu: FC<IMenuProps> = (props) => {
     onItemClick
   };
 
-  // 只渲染子元素中 displayName 为 MenuItem 的元素
+  // 只渲染子元素中特定 displayName 的元素
   const renderChildren = () => {
-    // 统计不为 MenuItem 的元素，用于计算默认的 index
+    // 统计其他的元素，用于计算默认的 index
     let otherElCount = 0;
 
     return React.Children.map(children, (child, i) => {
-      let childEl = child as React.FunctionComponentElement<IMenuItemProps>;
+      let childEl = child as childrenComponenet;
       const { index } = childEl.props;
       const { displayName } = childEl.type;
 
-      if (displayName === 'MenuItem') {
+      if (displayName === 'MenuItem' || displayName === 'Submenu') {
         if (!index) {
           // 对于未设置 index 的 menu-item，clone 一份，并添加一个默认的 index
           // 默认的 index 要注意减去其他元素的数目
@@ -82,7 +103,7 @@ const Menu: FC<IMenuProps> = (props) => {
         return childEl;
       } else {
         otherElCount++;
-        console.error(`Warning: Menu's child must be a Menu Item`);
+        console.error(`Warning: Menu's child must be a Menu Item or Submenu`);
       }
     });
   };

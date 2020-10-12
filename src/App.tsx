@@ -12,8 +12,8 @@ function App() {
         onSelect={(index, e) => {
           console.log('选中了', index);
         }}
-        onClick={(index) => {
-          console.log('点击了', index);
+        onClick={(index, path) => {
+          console.log('点击了', index, path);
         }}
       >
         <MenuItem index="item_1">menu item 1</MenuItem>
@@ -25,8 +25,12 @@ function App() {
         <MenuItem index="item_5">menu item 5</MenuItem>
 
         <Submenu title="submenu">
-          <MenuItem index="item_6">menu item 6</MenuItem>
-          <MenuItem index="item_7">menu item 7</MenuItem>
+          <MenuItem>menu item 6</MenuItem>
+          <MenuItem>menu item 7</MenuItem>
+          <Submenu title="submenu">
+            <MenuItem>menu item 8</MenuItem>
+            <MenuItem>menu item 9</MenuItem>
+          </Submenu>
         </Submenu>
       </Menu>
 
