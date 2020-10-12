@@ -13,10 +13,10 @@
     align-items: center;
     cursor: pointer;
     &:hover {
-      color: $tab-active-color;
+      color: $active-menu-item-color;
     }
     &-active {
-      color: $tab-active-color;
+      color: $active-menu-item-color;
       font-weight: 700;
       &::after {
         content: '';
@@ -25,7 +25,7 @@
         width: 100%;
         height: 4px;
         bottom: -1px;
-        background-color: $tab-active-color;
+        background-color: $active-menu-item-color;
       }
     }
     &-disabled {
@@ -49,5 +49,45 @@
         right: -1px;
       }
     }
+  }
+}
+
+.woo-submenu {
+  position: relative;
+  cursor: pointer;
+  .woo-submenu-title {
+    display: flex;
+    align-items: center;
+    color: #333;
+    height: 48px;
+    padding: 0 16px;
+  }
+  .woo-submenu-list {
+    // 二级菜单里的 menu item 样式
+    .woo-menu-item {
+      height: 30px;
+      justify-content: flex-start;
+      &-active {
+        font-weight: 400;
+        color: $active-menu-item-color;
+        background-color: $menu-item-bg-active;
+        &::after {
+          content: none;
+        }
+      }
+    }
+  }
+  .woo-submenu-popper {
+    position: absolute;
+    top: 100%;
+    transform: translateY(4px);
+    border: 1px solid $border-color;
+    background-color: $layout-bg-color;
+    white-space: nowrap;
+    box-shadow: $button-box-shadow;
+    border-radius: $border-radius;
+    z-index: 99;
+    padding: 5px 0;
+    min-width: 136px;
   }
 }
