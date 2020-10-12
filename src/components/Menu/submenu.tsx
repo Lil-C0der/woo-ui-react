@@ -38,11 +38,24 @@ const Submenu: FC<ISubmenuProps> = (props) => {
   const titleDOMRef = useRef<HTMLDivElement>(null);
   const isOpenRef = useRef<boolean>(false);
 
-  const classes = classNames('woo-submenu', className);
-  const popperClasses = classNames(
-    'woo-submenu-list',
-    vertical ? 'woo-submenu-vertical' : 'woo-submenu-popper'
-  );
+  useEffect(() => {
+    const closePopper = (e: MouseEvent) => {
+      const { target } = e;
+      // 点击除了 popper 以外的地方则关闭 popper
+      // 状态 isOpen 用了一个 ref 来获取最新的值
+      if (target !== titleDOMRef.current && isOpenRef.current) {
+        setTimeout(() => {
+          setIsOpen(false);
+          isOpenRef.current = false;
+        }, 300);
+      }
+    };
+
+    window.document.addEventListener('click', closePopper);
+    return () => {
+      window.document.removeEventListener('click', closePopper);
+    };
+  }, []);
 
   const openPopper = (e: React.MouseEvent) => {
     const { target } = e;
@@ -52,25 +65,6 @@ const Submenu: FC<ISubmenuProps> = (props) => {
       isOpenRef.current = true;
     }
   };
-
-  const closePopper = (e: MouseEvent) => {
-    const { target } = e;
-    // 点击除了 popper 以外的地方则关闭 popper
-    // 状态 isOpen 用了一个 ref 来获取最新的值
-    if (target !== titleDOMRef.current && isOpenRef.current) {
-      setTimeout(() => {
-        setIsOpen(false);
-        isOpenRef.current = false;
-      }, 300);
-    }
-  };
-
-  useEffect(() => {
-    window.document.addEventListener('click', closePopper);
-    return () => {
-      window.document.removeEventListener('click', closePopper);
-    };
-  }, [isOpen]);
 
   // 只渲染特定 displayName 的子组件
   const renderChildren = () => {
@@ -95,6 +89,12 @@ const Submenu: FC<ISubmenuProps> = (props) => {
       }
     });
   };
+
+  const classes = classNames('woo-submenu', className);
+  const popperClasses = classNames(
+    'woo-submenu-list',
+    vertical ? 'woo-submenu-vertical' : 'woo-submenu-popper'
+  );
 
   // 要传递的 context 对象，parentIndex 用于生成 item 的路径
   const passedContext: ISubmenuContext = {
