@@ -21,16 +21,20 @@ export interface ISubmenuProps {
 
 interface ISubmenuContext {
   parentIndex: Array<string>;
+  hasActiveItem: boolean;
 }
 
 export const SubmenuContext = React.createContext<ISubmenuContext>({
   // 默认传递一个空数组，避免一级的 MenuItem path 出错
-  parentIndex: []
+  parentIndex: [],
+  hasActiveItem: false
 });
 
 const Submenu: FC<ISubmenuProps> = (props) => {
   const { index, title, children, className, style } = props;
   const [isOpen, setIsOpen] = useState(false);
+  const [hasActiveItem, setHasActiveItem] = useState(false);
+
   // context
   const menuContext = useContext(MenuContext);
   // 类似 Vue 递归组件
@@ -72,6 +76,15 @@ const Submenu: FC<ISubmenuProps> = (props) => {
     };
   }, [closePopper]);
 
+  // 子组件的 index
+  let childrenIdxArr: Array<string> = [];
+  // 判断 Submenu 子组件中是否存在 active-item
+  useEffect(() => {
+    setHasActiveItem(
+      childrenIdxArr.includes(menuContext.selectedIndex as string)
+    );
+  }, [childrenIdxArr, menuContext.selectedIndex]);
+
   const onSubmenuClick = (e: React.MouseEvent) => {
     const target = e.target as HTMLElement;
     if (!target.className.includes('woo-menu-item')) {
@@ -108,9 +121,7 @@ const Submenu: FC<ISubmenuProps> = (props) => {
         }
       : {};
 
-  let childrenIdxArr: Array<string> = [];
-
-  // 只渲染特定 displayName 的子组件
+  // 返回特定 displayName 的子组件，初始化子组件 index 数组
   const renderChildren = () => {
     // 统计其他的元素，用于计算默认的 index
     let otherElCount = 0;
@@ -128,7 +139,6 @@ const Submenu: FC<ISubmenuProps> = (props) => {
         }
         // 子组件如果没有 index 会添加默认 index，所以使用了类型断言
         childrenIdxArr.push(childEl.props.index as string);
-
         return childEl;
       } else {
         otherElCount++;
@@ -136,15 +146,12 @@ const Submenu: FC<ISubmenuProps> = (props) => {
       }
     });
   };
-
+  // 需要被渲染的子组件
   const childComponenets = renderChildren();
 
   // submenu wrapper 的 className
   const classes = classNames('woo-submenu', className, {
-    // TODO renderChildren 方法在渲染时才被调用，所以这里的 childrenIdxArr 是空数组
-    'has-active-item': childrenIdxArr.includes(
-      menuContext.selectedIndex as string
-    )
+    'has-active-item': hasActiveItem
   });
   // popper 的 className
   const popperClasses = classNames(
@@ -155,7 +162,8 @@ const Submenu: FC<ISubmenuProps> = (props) => {
   // 要传递的 context 对象，parentIndex 用于生成 item 的路径
   const passedContext: ISubmenuContext = {
     // 自身默认 index 通过父组件的 renderChildren 方法生成，所以使用类型断言
-    parentIndex: [...submenuContext.parentIndex, index] as Array<string>
+    parentIndex: [...submenuContext.parentIndex, index] as Array<string>,
+    hasActiveItem
   };
 
   return (
@@ -164,7 +172,6 @@ const Submenu: FC<ISubmenuProps> = (props) => {
       {/* 这个 context 传递 parentIndex */}
       <SubmenuContext.Provider value={passedContext}>
         <ul style={isOpen ? {} : { display: 'none' }} className={popperClasses}>
-          {/* {renderChildren()} */}
           {childComponenets}
         </ul>
       </SubmenuContext.Provider>
