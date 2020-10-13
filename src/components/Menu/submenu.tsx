@@ -5,7 +5,8 @@ import React, {
   useContext,
   useState,
   useEffect,
-  useRef
+  useRef,
+  useCallback
 } from 'react';
 import classNames from 'classnames';
 import { MenuContext } from './menu';
@@ -31,51 +32,83 @@ const Submenu: FC<ISubmenuProps> = (props) => {
   const { index, title, children, className, style } = props;
   const [isOpen, setIsOpen] = useState(false);
   // context
-  const { selectedIndex, vertical } = useContext(MenuContext);
+  const menuContext = useContext(MenuContext);
   // 类似 Vue 递归组件
-  const { parentIndex } = useContext(SubmenuContext);
+  const submenuContext = useContext(SubmenuContext);
   // ref
-  const submenuDOMRef = useRef<HTMLLIElement>(null);
   const isOpenRef = useRef<boolean>(false);
+
+  const { onClose, onOpen } = menuContext;
+  const openPopper = () => {
+    setIsOpen(true);
+    isOpenRef.current = true;
+    onOpen && onOpen(index as string);
+  };
+
+  const closePopper = useCallback(() => {
+    setIsOpen(false);
+    isOpenRef.current = false;
+    onClose && onClose(index as string);
+  }, [index, onClose]);
 
   // 给 document 添加 click outside 的监听
   useEffect(() => {
     const onDocClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       // 点击页面其他地方时关闭 popper
-      if (!submenuDOMRef.current?.contains(target)) {
+      if (
+        !target.className.includes('woo-submenu-title') &&
+        isOpenRef.current
+      ) {
         closePopper();
       }
     };
 
     // 确保 document 只有一个监听器
     window.document.onclick = onDocClick;
+
     return () => {
       window.document.onclick = () => false;
     };
-  }, []);
-
-  let childrenIdxArr: Array<string> = [];
-
-  const openPopper = () => {
-    setIsOpen(true);
-    isOpenRef.current = true;
-  };
-
-  const closePopper = () => {
-    setIsOpen(false);
-    isOpenRef.current = false;
-  };
+  }, [closePopper]);
 
   const onSubmenuClick = (e: React.MouseEvent) => {
     const target = e.target as HTMLElement;
-
     if (!target.className.includes('woo-menu-item')) {
-      openPopper();
+      !isOpen && openPopper();
     } else {
-      closePopper();
+      isOpen && closePopper();
     }
   };
+
+  let timer: any;
+  const onSubmenuMouseEnter = (e: React.MouseEvent) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      !isOpen && openPopper();
+    }, 300);
+  };
+
+  const onSubmenuMouseLeave = (e: React.MouseEvent) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      isOpen && closePopper();
+    }, 300);
+  };
+
+  // trigger 不同，绑定不同的事件
+  const clickEvent: React.DOMAttributes<HTMLLIElement> =
+    menuContext.trigger === 'click' ? { onClick: onSubmenuClick } : {};
+
+  const hoverEvent: React.DOMAttributes<HTMLLIElement> =
+    menuContext.trigger === 'hover'
+      ? {
+          onMouseEnter: onSubmenuMouseEnter,
+          onMouseLeave: onSubmenuMouseLeave
+        }
+      : {};
+
+  let childrenIdxArr: Array<string> = [];
 
   // 只渲染特定 displayName 的子组件
   const renderChildren = () => {
@@ -104,35 +137,35 @@ const Submenu: FC<ISubmenuProps> = (props) => {
     });
   };
 
+  const childComponenets = renderChildren();
+
   // submenu wrapper 的 className
   const classes = classNames('woo-submenu', className, {
     // TODO renderChildren 方法在渲染时才被调用，所以这里的 childrenIdxArr 是空数组
-    'has-active-item': childrenIdxArr.includes(selectedIndex as string)
+    'has-active-item': childrenIdxArr.includes(
+      menuContext.selectedIndex as string
+    )
   });
   // popper 的 className
   const popperClasses = classNames(
     'woo-submenu-list',
-    vertical ? 'woo-submenu-vertical' : 'woo-submenu-popper'
+    menuContext.vertical ? 'woo-submenu-vertical' : 'woo-submenu-popper'
   );
 
   // 要传递的 context 对象，parentIndex 用于生成 item 的路径
   const passedContext: ISubmenuContext = {
     // 自身默认 index 通过父组件的 renderChildren 方法生成，所以使用类型断言
-    parentIndex: [...parentIndex, index] as Array<string>
+    parentIndex: [...submenuContext.parentIndex, index] as Array<string>
   };
 
   return (
-    <li
-      className={classes}
-      style={style}
-      onClick={onSubmenuClick}
-      ref={submenuDOMRef}
-    >
+    <li className={classes} style={style} {...clickEvent} {...hoverEvent}>
       <div className="woo-submenu-title">{title}</div>
       {/* 这个 context 传递 parentIndex */}
       <SubmenuContext.Provider value={passedContext}>
         <ul style={isOpen ? {} : { display: 'none' }} className={popperClasses}>
-          {renderChildren()}
+          {/* {renderChildren()} */}
+          {childComponenets}
         </ul>
       </SubmenuContext.Provider>
     </li>

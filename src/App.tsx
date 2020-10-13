@@ -15,6 +15,13 @@ function App() {
         onClick={(index, path) => {
           console.log('点击了', index, path);
         }}
+        onOpen={(index) => {
+          console.log(`打开了 ${index}`);
+        }}
+        onClose={(index) => {
+          console.log(`关闭了 ${index}`);
+        }}
+        // trigger="hover"
       >
         <MenuItem index="item_1">menu item 1</MenuItem>
         <MenuItem disabled index="item_2">

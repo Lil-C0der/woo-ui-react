@@ -5,7 +5,8 @@
   border-bottom: 1px solid $border-color;
   &-item {
     display: flex;
-    color: $color-black;
+    // color: $color-black;
+    color: $color-grey;
     height: 48px;
     position: relative;
     padding: 0 16px;
@@ -24,6 +25,7 @@
         position: absolute;
         width: 100%;
         height: 4px;
+        left: 0;
         bottom: -1px;
         background-color: $active-menu-item-color;
       }
@@ -55,23 +57,10 @@
 .woo-submenu {
   position: relative;
   cursor: pointer;
-  & .has-active-item {
-    color: $active-menu-item-color;
-    font-weight: 700;
-    &::after {
-      content: '';
-      display: block;
-      position: absolute;
-      width: 100%;
-      height: 4px;
-      bottom: -1px;
-      background-color: $active-menu-item-color;
-    }
-  }
   .woo-submenu-title {
     display: flex;
     align-items: center;
-    color: #333;
+    color: $color-grey;
     height: 48px;
     padding: 0 16px;
   }
@@ -82,7 +71,6 @@
       justify-content: flex-start;
       &-active {
         font-weight: 400;
-        color: $active-menu-item-color;
         background-color: $menu-item-bg-active;
         &::after {
           content: none;
@@ -102,5 +90,40 @@
     z-index: 99;
     padding: 5px 0;
     min-width: 136px;
+    // submenu 里的 submenu 组件的样式
+    .woo-submenu-popper {
+      left: 100%;
+      transform: translateX(4px) translateY(-30px);
+    }
+    .has-active-item {
+      .woo-submenu-title {
+        font-weight: 400;
+        background-color: $color-grey;
+        background-color: $menu-item-bg-active;
+        &::after {
+          content: none;
+        }
+      }
+    }
+    // submenu 里的 title 元素
+    .woo-submenu-title {
+      height: 30px;
+    }
+  }
+  &.has-active-item {
+    > .woo-submenu-title {
+      color: $active-menu-item-color;
+      font-weight: 700;
+      &::after {
+        content: '';
+        display: block;
+        position: absolute;
+        width: 100%;
+        height: 4px;
+        left: 0;
+        bottom: -1px;
+        background-color: $active-menu-item-color;
+      }
+    }
   }
 }

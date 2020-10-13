@@ -15,14 +15,18 @@ type ClickCallback = (
   indexPath: Array<string>,
   e: React.MouseEvent
 ) => void;
+type OpenChangeCallback = (clickedIndex: string) => void;
 
 export interface IMenuProps {
   selectedIndex?: string;
   vertical?: boolean;
   className?: string;
   style?: CSSProperties;
+  trigger?: 'hover' | 'click';
   onSelect?: SelectCallback;
   onClick?: ClickCallback;
+  onOpen?: OpenChangeCallback;
+  onClose?: OpenChangeCallback;
 }
 
 // 子组件实例类型
@@ -34,12 +38,16 @@ export type childrenComponenet = FunctionComponentElement<
 interface IMenuContext {
   selectedIndex: IMenuProps['selectedIndex'];
   vertical: IMenuProps['vertical'];
+  trigger: IMenuProps['trigger'];
   onItemClick?: ClickCallback;
+  onOpen?: IMenuProps['onOpen'];
+  onClose?: IMenuProps['onClose'];
 }
 
 // 创建的 context 对象
 export const MenuContext = React.createContext<IMenuContext>({
   selectedIndex: 'item_0',
+  trigger: 'click',
   vertical: false
 });
 
@@ -50,8 +58,11 @@ const Menu: FC<IMenuProps> = (props) => {
     className,
     style,
     children,
+    trigger,
     onSelect,
-    onClick
+    onClick,
+    onOpen,
+    onClose
   } = props;
 
   const classes = classNames('woo-menu', className, {
@@ -79,7 +90,10 @@ const Menu: FC<IMenuProps> = (props) => {
   const passedContext: IMenuContext = {
     selectedIndex: currSelectedIdx,
     vertical,
-    onItemClick
+    trigger,
+    onItemClick,
+    onOpen,
+    onClose
   };
 
   // 只渲染子元素中特定 displayName 的元素
@@ -95,8 +109,8 @@ const Menu: FC<IMenuProps> = (props) => {
       if (displayName === 'MenuItem' || displayName === 'Submenu') {
         if (!index) {
           // 对于未设置 index 的 menu-item，clone 一份，并添加一个默认的 index
-          // 默认的 index 要注意减去其他元素的数目
           childEl = React.cloneElement(childEl, {
+            // 默认的 index 要注意减去其他元素的数目
             index: `item_${i - otherElCount}`
           });
         }
@@ -118,6 +132,8 @@ const Menu: FC<IMenuProps> = (props) => {
 };
 
 Menu.defaultProps = {
-  vertical: false
+  // selectedIndex: 'item_0',
+  vertical: false,
+  trigger: 'click'
 };
 export default Menu;
