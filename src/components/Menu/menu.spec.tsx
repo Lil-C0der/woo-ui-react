@@ -7,6 +7,7 @@ import {
 } from '@testing-library/react';
 import Menu, { IMenuProps } from './menu';
 import MenuItem, { IMenuItemProps } from './menuItem';
+import Submenu from './submenu';
 
 const testProps: IMenuProps = {
   // 默认选中第二个 item，即文本为 active 的 item
@@ -20,6 +21,12 @@ const testOnSelectProps: IMenuProps = {
   selectedIndex: 'item_1',
   onClick: jest.fn(),
   onSelect: jest.fn()
+};
+
+const testOnOpenProps: IMenuProps = {
+  // trigger: 'hover',
+  onOpen: jest.fn(),
+  onClose: jest.fn()
 };
 
 const testVerticalProps: IMenuProps = {
@@ -96,5 +103,24 @@ describe('Menu 组件', () => {
     const verticalWrapper = render(renderMenu(testVerticalProps));
     const verticalMenuEl = verticalWrapper.container.querySelector('.woo-menu');
     expect(verticalMenuEl).toHaveClass('woo-menu-vertical');
+  });
+
+  it('可以触发 onOpen 和 onClose 回调', () => {
+    const wrapper = render(
+      <Menu {...testOnOpenProps}>
+        <MenuItem>test item 0</MenuItem>
+        <Submenu title="submenu" index="submenu_test">
+          <MenuItem>test item 1</MenuItem>
+          <MenuItem>test item 2</MenuItem>
+        </Submenu>
+      </Menu>
+    );
+
+    const submenuEl = wrapper.container.querySelector('.woo-submenu');
+    const menuItemEl = wrapper.getByText('test item 0');
+    fireEvent.click(submenuEl as Element);
+    expect(testOnOpenProps.onOpen).toBeCalledWith('submenu_test');
+    fireEvent.click(menuItemEl);
+    expect(testOnOpenProps.onClose).toBeCalledWith('submenu_test');
   });
 });
