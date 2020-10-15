@@ -21,19 +21,16 @@ export interface ISubmenuProps {
 
 interface ISubmenuContext {
   parentIndex: Array<string>;
-  hasActiveItem: boolean;
 }
 
 export const SubmenuContext = React.createContext<ISubmenuContext>({
   // 默认传递一个空数组，避免一级的 MenuItem path 出错
-  parentIndex: [],
-  hasActiveItem: false
+  parentIndex: []
 });
 
 const Submenu: FC<ISubmenuProps> = (props) => {
   const { index, title, children, className, style } = props;
   const [isOpen, setIsOpen] = useState(false);
-  const [hasActiveItem, setHasActiveItem] = useState(false);
 
   // context
   const menuContext = useContext(MenuContext);
@@ -79,11 +76,6 @@ const Submenu: FC<ISubmenuProps> = (props) => {
   // 子组件的 index
   let childrenIdxArr: Array<string> = [];
   // 判断 Submenu 子组件中是否存在 active-item
-  useEffect(() => {
-    setHasActiveItem(
-      childrenIdxArr.includes(menuContext.selectedIndex as string)
-    );
-  }, [childrenIdxArr, menuContext.selectedIndex]);
 
   const onSubmenuClick = (e: React.MouseEvent) => {
     const target = e.target as HTMLElement;
@@ -151,7 +143,7 @@ const Submenu: FC<ISubmenuProps> = (props) => {
 
   // submenu wrapper 的 className
   const classes = classNames('woo-submenu', className, {
-    'has-active-item': hasActiveItem
+    'has-active-item': menuContext.indexPath.includes(props.index as string)
   });
   // popper 的 className
   const popperClasses = classNames(
@@ -162,8 +154,7 @@ const Submenu: FC<ISubmenuProps> = (props) => {
   // 要传递的 context 对象，parentIndex 用于生成 item 的路径
   const passedContext: ISubmenuContext = {
     // 自身默认 index 通过父组件的 renderChildren 方法生成，所以使用类型断言
-    parentIndex: [...submenuContext.parentIndex, index] as Array<string>,
-    hasActiveItem
+    parentIndex: [...submenuContext.parentIndex, index] as Array<string>
   };
 
   return (

@@ -39,6 +39,8 @@ interface IMenuContext {
   selectedIndex: IMenuProps['selectedIndex'];
   vertical: IMenuProps['vertical'];
   trigger: IMenuProps['trigger'];
+  indexPath: Array<string>;
+  initPath: (path: Array<string>) => void;
   onItemClick?: ClickCallback;
   onOpen?: IMenuProps['onOpen'];
   onClose?: IMenuProps['onClose'];
@@ -48,7 +50,9 @@ interface IMenuContext {
 export const MenuContext = React.createContext<IMenuContext>({
   selectedIndex: 'item_0',
   trigger: 'click',
-  vertical: false
+  vertical: false,
+  indexPath: ['item_0'],
+  initPath: (path) => {}
 });
 
 const Menu: FC<IMenuProps> = (props) => {
@@ -71,6 +75,11 @@ const Menu: FC<IMenuProps> = (props) => {
 
   // 用 useState hook 来控制 selected-index
   const [currSelectedIdx, setSelectIdx] = useState(selectedIndex);
+  const [indexPath, setIndexPath] = useState(['item_0']);
+
+  const initPath = (path: Array<string>) => {
+    setIndexPath(path);
+  };
 
   // 处理 item 的点击事件
   const onItemClick = (
@@ -79,9 +88,12 @@ const Menu: FC<IMenuProps> = (props) => {
     e: React.MouseEvent
   ) => {
     onClick && onClick(index, path, e);
+
     // 重复点击同一个 item 只能触发一次 select
     if (index !== currSelectedIdx) {
       onSelect && onSelect(index, e);
+      setIndexPath(path);
+      console.log('change');
     }
     setSelectIdx(index);
   };
@@ -91,6 +103,8 @@ const Menu: FC<IMenuProps> = (props) => {
     selectedIndex: currSelectedIdx,
     vertical,
     trigger,
+    indexPath,
+    initPath,
     onItemClick,
     onOpen,
     onClose

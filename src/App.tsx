@@ -8,7 +8,8 @@ function App() {
   return (
     <div className="App">
       <Menu
-        selectedIndex="item_3"
+        // selectedIndex="item_3"
+        selectedIndex="item_5_2_1"
         onSelect={(index, e) => {
           console.log('选中了', index);
         }}
@@ -23,13 +24,13 @@ function App() {
         }}
         // trigger="hover"
       >
-        <MenuItem index="item_1">menu item 1</MenuItem>
+        <MenuItem>menu item 1</MenuItem>
         <MenuItem disabled index="item_2">
           menu item 2
         </MenuItem>
-        <MenuItem index="item_3">menu item 3</MenuItem>
-        <MenuItem index="item_4">menu item 4</MenuItem>
-        <MenuItem index="item_5">menu item 5</MenuItem>
+        <MenuItem>menu item 3</MenuItem>
+        <MenuItem>menu item 4</MenuItem>
+        <MenuItem>menu item 5</MenuItem>
 
         <Submenu title="submenu">
           <MenuItem>menu item 6</MenuItem>
