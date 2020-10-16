@@ -6,7 +6,7 @@ import {
   cleanup
 } from '@testing-library/react';
 import Menu, { IMenuProps } from './menu';
-import MenuItem, { IMenuItemProps } from './menuItem';
+import MenuItem from './menuItem';
 import Submenu from './submenu';
 
 const testProps: IMenuProps = {
@@ -24,14 +24,23 @@ const testOnSelectProps: IMenuProps = {
 };
 
 const testOnOpenProps: IMenuProps = {
-  // trigger: 'hover',
   onOpen: jest.fn(),
+  onClose: jest.fn()
+};
+
+const testClickOutsideProps: IMenuProps = {
   onClose: jest.fn()
 };
 
 const testVerticalProps: IMenuProps = {
   selectedIndex: 'item_0',
   vertical: true
+};
+
+const testTriggerProps: IMenuProps = {
+  trigger: 'hover',
+  onOpen: jest.fn(),
+  onClose: jest.fn()
 };
 
 const renderMenu = (props: IMenuProps) => (
@@ -108,6 +117,23 @@ describe('Menu 组件', () => {
   it('可以触发 onOpen 和 onClose 回调', () => {
     const wrapper = render(
       <Menu {...testOnOpenProps}>
+        <Submenu title="submenu" index="submenu_test">
+          <MenuItem>test item 1</MenuItem>
+          <MenuItem>test item 2</MenuItem>
+        </Submenu>
+      </Menu>
+    );
+
+    const submenuEl = wrapper.getByText('submenu');
+    fireEvent.click(submenuEl);
+    expect(testOnOpenProps.onOpen).toHaveBeenCalledWith('submenu_test');
+    fireEvent.click(submenuEl);
+    expect(testOnOpenProps.onClose).toBeCalledWith('submenu_test');
+  });
+
+  it('点击页面其他地方可以关闭 popper，触发 onClose 回调', () => {
+    const wrapper = render(
+      <Menu {...testClickOutsideProps}>
         <MenuItem>test item 0</MenuItem>
         <Submenu title="submenu" index="submenu_test">
           <MenuItem>test item 1</MenuItem>
@@ -116,11 +142,34 @@ describe('Menu 组件', () => {
       </Menu>
     );
 
-    const submenuEl = wrapper.container.querySelector('.woo-submenu');
+    const submenuEl = wrapper.getByText('submenu');
     const menuItemEl = wrapper.getByText('test item 0');
-    fireEvent.click(submenuEl as Element);
-    expect(testOnOpenProps.onOpen).toBeCalledWith('submenu_test');
+    fireEvent.click(submenuEl);
     fireEvent.click(menuItemEl);
-    expect(testOnOpenProps.onClose).toBeCalledWith('submenu_test');
+    expect(testClickOutsideProps.onClose).toBeCalledWith('submenu_test');
+  });
+
+  it('可以设置 trigger', () => {
+    const wrapper = render(
+      <Menu {...testTriggerProps}>
+        <MenuItem>test item 0</MenuItem>
+        <Submenu title="submenu" index="submenu_test">
+          <MenuItem>test item 1</MenuItem>
+          <MenuItem>test item 2</MenuItem>
+        </Submenu>
+      </Menu>
+    );
+
+    const submenuEl = wrapper.getByText('submenu');
+    fireEvent.mouseEnter(submenuEl);
+    fireEvent.mouseLeave(submenuEl);
+
+    jest.useFakeTimers();
+    jest.runAllTimers();
+
+    setTimeout(() => {
+      expect(testTriggerProps.onOpen).toHaveBeenCalledWith('submenu_test');
+      expect(testTriggerProps.onClose).toHaveBeenCalledWith('submenu_test');
+    }, 1000);
   });
 });
