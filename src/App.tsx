@@ -26,9 +26,7 @@ function App() {
         style={{ width: 200 }}
       >
         <MenuItem>menu item 1</MenuItem>
-        <MenuItem disabled index="item_2">
-          menu item 2
-        </MenuItem>
+        <MenuItem disabled>menu item 2</MenuItem>
         <MenuItem>menu item 3</MenuItem>
         <MenuItem>menu item 4</MenuItem>
         <MenuItem>menu item 5</MenuItem>
@@ -61,9 +59,7 @@ function App() {
         style={{ marginTop: 50 }}
       >
         <MenuItem>menu item 1</MenuItem>
-        <MenuItem disabled index="item_2">
-          menu item 2
-        </MenuItem>
+        <MenuItem disabled>menu item 2</MenuItem>
         <MenuItem>menu item 3</MenuItem>
         <MenuItem>menu item 4</MenuItem>
         <MenuItem>menu item 5</MenuItem>

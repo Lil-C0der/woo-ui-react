@@ -5,7 +5,6 @@
   border-bottom: 1px solid $border-color;
   &-item {
     display: flex;
-    // color: $color-black;
     color: $color-grey;
     height: 48px;
     position: relative;
@@ -42,15 +41,19 @@
   flex-direction: column;
   border-bottom: none;
   border-right: 1px solid $border-color;
+  padding-left: 0;
   .woo-menu-item {
     justify-content: flex-start;
-    &-active {
-      &::after {
-        width: 4px;
-        height: 100%;
-        right: -1px;
-      }
+    &-active::after {
+      width: 4px;
+      height: 100%;
+      right: -1px;
     }
+  }
+  .has-active-item .woo-submenu-title::after {
+    width: 4px;
+    height: 100%;
+    right: -1px;
   }
 }
 
@@ -58,6 +61,7 @@
   position: relative;
   cursor: pointer;
   .woo-submenu-title {
+    position: relative;
     display: flex;
     align-items: center;
     color: $color-grey;
@@ -67,7 +71,6 @@
   .woo-submenu-list {
     // 二级菜单里的 menu item 样式
     .woo-menu-item {
-      height: 30px;
       justify-content: flex-start;
       &-active {
         font-weight: 400;
@@ -78,51 +81,73 @@
       }
     }
   }
-  .woo-submenu-popper {
-    position: absolute;
-    top: 100%;
-    transform: translateY(4px);
-    border: 1px solid $border-color;
-    background-color: $layout-bg-color;
-    white-space: nowrap;
-    box-shadow: $button-box-shadow;
-    border-radius: $border-radius;
-    z-index: 99;
-    padding: 5px 0;
-    min-width: 136px;
-    // submenu 里的 submenu 组件的样式
-    .woo-submenu-popper {
-      left: 100%;
-      transform: translateX(4px) translateY(-30px);
-    }
-    .has-active-item {
-      .woo-submenu-title {
-        font-weight: 400;
-        background-color: $color-grey;
-        background-color: $menu-item-bg-active;
-        &::after {
-          content: none;
-        }
-      }
-    }
-    // submenu 里的 title 元素
-    .woo-submenu-title {
-      height: 30px;
+}
+
+.has-active-item {
+  > .woo-submenu-title {
+    color: $active-menu-item-color;
+    font-weight: 700;
+    &::after {
+      content: '';
+      display: block;
+      position: absolute;
+      width: 100%;
+      height: 4px;
+      left: 0;
+      bottom: -1px;
+      background-color: $active-menu-item-color;
     }
   }
-  &.has-active-item {
-    > .woo-submenu-title {
-      color: $active-menu-item-color;
-      font-weight: 700;
+}
+
+.woo-submenu-vertical {
+  .woo-menu-item,
+  .woo-submenu-title {
+    height: 40px;
+    padding-left: 32px;
+  }
+  .has-active-item > .woo-submenu-title {
+    &::after {
+      content: none;
+    }
+  }
+  // submenu 里的 submenu 组件的样式
+  .woo-submenu-vertical {
+    .woo-menu-item,
+    .woo-submenu-title {
+      padding-left: 48px;
+    }
+  }
+}
+
+.woo-submenu-popper {
+  position: absolute;
+  top: 100%;
+  transform: translateY(4px);
+  border: 1px solid $border-color;
+  background-color: $layout-bg-color;
+  white-space: nowrap;
+  box-shadow: $button-box-shadow;
+  border-radius: $border-radius;
+  z-index: 99;
+  padding: 5px 0;
+  min-width: 136px;
+  .woo-menu-item,
+  .woo-submenu-title {
+    height: 30px;
+  }
+  // submenu 里的 submenu 组件的样式
+  .woo-submenu-popper {
+    left: 100%;
+    transform: translateX(4px) translateY(-30px);
+  }
+  .has-active-item {
+    .woo-submenu-title {
+      font-weight: 400;
+      background-color: $color-grey;
+      background-color: $menu-item-bg-active;
       &::after {
-        content: '';
-        display: block;
-        position: absolute;
-        width: 100%;
-        height: 4px;
-        left: 0;
-        bottom: -1px;
-        background-color: $active-menu-item-color;
+        content: none;
       }
     }
   }
