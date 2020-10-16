@@ -39,6 +39,9 @@ const Submenu: FC<ISubmenuProps> = (props) => {
   // ref
   const isOpenRef = useRef<boolean>(false);
 
+  const submenuDOMRef = useRef<HTMLLIElement>(null);
+  const titleDOMRef = useRef<HTMLDivElement>(null);
+
   const { onClose, onOpen } = menuContext;
   const openPopper = () => {
     setIsOpen(true);
@@ -57,32 +60,27 @@ const Submenu: FC<ISubmenuProps> = (props) => {
     const onDocClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       // 点击页面其他地方时关闭 popper
-      if (
-        !target.className.includes('woo-submenu-title') &&
-        isOpenRef.current
-      ) {
+      if (!submenuDOMRef.current?.contains(target) && isOpenRef.current) {
         closePopper();
       }
     };
 
-    // 确保 document 只有一个监听器
-    window.document.onclick = onDocClick;
-
+    document.addEventListener('click', onDocClick);
     return () => {
-      window.document.onclick = () => false;
+      document.removeEventListener('click', onDocClick);
     };
   }, [closePopper]);
 
-  // 子组件的 index
-  let childrenIdxArr: Array<string> = [];
-  // 判断 Submenu 子组件中是否存在 active-item
-
   const onSubmenuClick = (e: React.MouseEvent) => {
     const target = e.target as HTMLElement;
-    if (!target.className.includes('woo-menu-item')) {
+
+    if (titleDOMRef.current?.contains(target)) {
       !isOpen && openPopper();
-    } else {
       isOpen && closePopper();
+    }
+    // 水平状态下，点击 item 关闭 popper
+    if (!menuContext.vertical && target.className.includes('woo-menu-item')) {
+      closePopper();
     }
   };
 
@@ -129,8 +127,7 @@ const Submenu: FC<ISubmenuProps> = (props) => {
             index: `${props.index}_${i - otherElCount}`
           });
         }
-        // 子组件如果没有 index 会添加默认 index，所以使用了类型断言
-        childrenIdxArr.push(childEl.props.index as string);
+
         return childEl;
       } else {
         otherElCount++;
@@ -158,8 +155,16 @@ const Submenu: FC<ISubmenuProps> = (props) => {
   };
 
   return (
-    <li className={classes} style={style} {...clickEvent} {...hoverEvent}>
-      <div className="woo-submenu-title">{title}</div>
+    <li
+      className={classes}
+      style={style}
+      ref={submenuDOMRef}
+      {...clickEvent}
+      {...hoverEvent}
+    >
+      <div className="woo-submenu-title" ref={titleDOMRef}>
+        {title}
+      </div>
       {/* 这个 context 传递 parentIndex */}
       <SubmenuContext.Provider value={passedContext}>
         <ul style={isOpen ? {} : { display: 'none' }} className={popperClasses}>

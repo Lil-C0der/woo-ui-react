@@ -93,7 +93,6 @@ const Menu: FC<IMenuProps> = (props) => {
     if (index !== currSelectedIdx) {
       onSelect && onSelect(index, e);
       setIndexPath(path);
-      console.log('change');
     }
     setSelectIdx(index);
   };
