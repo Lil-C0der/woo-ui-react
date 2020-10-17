@@ -30,15 +30,17 @@ export const SubmenuContext = React.createContext<ISubmenuContext>({
 
 const Submenu: FC<ISubmenuProps> = (props) => {
   const { index, title, children, className, style } = props;
-  const [isOpen, setIsOpen] = useState(false);
-
   // context
   const menuContext = useContext(MenuContext);
   // 类似 Vue 递归组件
   const submenuContext = useContext(SubmenuContext);
+  // 根据 openedSubmenus 属性来判断是否展开
+  const [isOpen, setIsOpen] = useState(
+    menuContext.openedSubmenus?.includes(index as string)
+  );
+
   // ref
   const isOpenRef = useRef<boolean>(false);
-
   const submenuDOMRef = useRef<HTMLLIElement>(null);
   const titleDOMRef = useRef<HTMLDivElement>(null);
 

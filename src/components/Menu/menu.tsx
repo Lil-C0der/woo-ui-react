@@ -19,6 +19,7 @@ type OpenChangeCallback = (clickedIndex: string) => void;
 
 export interface IMenuProps {
   selectedIndex?: string;
+  openedSubmenus?: Array<string>;
   vertical?: boolean;
   className?: string;
   style?: CSSProperties;
@@ -37,6 +38,7 @@ export type childrenComponenet = FunctionComponentElement<
 // context 的接口
 interface IMenuContext {
   selectedIndex: IMenuProps['selectedIndex'];
+  openedSubmenus: IMenuProps['openedSubmenus'];
   vertical: IMenuProps['vertical'];
   trigger: IMenuProps['trigger'];
   indexPath: Array<string>;
@@ -49,15 +51,17 @@ interface IMenuContext {
 // 创建的 context 对象
 export const MenuContext = React.createContext<IMenuContext>({
   selectedIndex: 'item_0',
+  openedSubmenus: ['item_0'],
   trigger: 'click',
   vertical: false,
-  indexPath: ['item_0'],
+  indexPath: [],
   initPath: (path) => {}
 });
 
 const Menu: FC<IMenuProps> = (props) => {
   const {
     selectedIndex,
+    openedSubmenus,
     vertical,
     className,
     style,
@@ -100,6 +104,7 @@ const Menu: FC<IMenuProps> = (props) => {
   // 传递给子组件的 context
   const passedContext: IMenuContext = {
     selectedIndex: currSelectedIdx,
+    openedSubmenus,
     vertical,
     trigger,
     indexPath,
@@ -145,7 +150,6 @@ const Menu: FC<IMenuProps> = (props) => {
 };
 
 Menu.defaultProps = {
-  // selectedIndex: 'item_0',
   vertical: false,
   trigger: 'click'
 };
