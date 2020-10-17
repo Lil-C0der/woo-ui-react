@@ -8,6 +8,7 @@ import {
 import Menu, { IMenuProps } from './menu';
 import MenuItem from './menuItem';
 import Submenu from './submenu';
+import { act } from 'react-dom/test-utils';
 
 const testProps: IMenuProps = {
   // 默认选中第二个 item，即文本为 active 的 item
@@ -23,6 +24,11 @@ const testOnSelectProps: IMenuProps = {
   onSelect: jest.fn()
 };
 
+const testVerticalProps: IMenuProps = {
+  selectedIndex: 'item_0',
+  vertical: true
+};
+
 const testOnOpenProps: IMenuProps = {
   onOpen: jest.fn(),
   onClose: jest.fn()
@@ -32,15 +38,14 @@ const testClickOutsideProps: IMenuProps = {
   onClose: jest.fn()
 };
 
-const testVerticalProps: IMenuProps = {
-  selectedIndex: 'item_0',
-  vertical: true
-};
-
 const testTriggerProps: IMenuProps = {
   trigger: 'hover',
   onOpen: jest.fn(),
   onClose: jest.fn()
+};
+
+const testOpenSubmenusProps: IMenuProps = {
+  openedSubmenus: ['submenu_test']
 };
 
 const renderMenu = (props: IMenuProps) => (
@@ -149,6 +154,7 @@ describe('Menu 组件', () => {
     expect(testClickOutsideProps.onClose).toBeCalledWith('submenu_test');
   });
 
+  // trigger 为 hover 时，有一个 300ms 的定时器，使用 jest 提供的方法来测试异步代码
   it('可以设置 trigger', () => {
     const wrapper = render(
       <Menu {...testTriggerProps}>
@@ -161,15 +167,38 @@ describe('Menu 组件', () => {
     );
 
     const submenuEl = wrapper.getByText('submenu');
-    fireEvent.mouseEnter(submenuEl);
-    fireEvent.mouseLeave(submenuEl);
+    const menuItemEl = wrapper.getByText('test item 1');
+    expect(menuItemEl).not.toBeVisible();
 
     jest.useFakeTimers();
-    jest.runAllTimers();
+    act(() => {
+      fireEvent.mouseEnter(submenuEl);
+      jest.advanceTimersByTime(500);
+    });
+    expect(testTriggerProps.onOpen).toHaveBeenCalledWith('submenu_test');
+    expect(menuItemEl).toBeVisible();
 
-    setTimeout(() => {
-      expect(testTriggerProps.onOpen).toHaveBeenCalledWith('submenu_test');
-      expect(testTriggerProps.onClose).toHaveBeenCalledWith('submenu_test');
-    }, 1000);
+    act(() => {
+      fireEvent.mouseLeave(submenuEl);
+      jest.advanceTimersByTime(500);
+    });
+    expect(testTriggerProps.onClose).toHaveBeenCalledWith('submenu_test');
+    expect(menuItemEl).not.toBeVisible();
+
+    jest.useRealTimers();
+  });
+
+  it('可以设置 openSubmenus 属性', () => {
+    const wrapper = render(
+      <Menu {...testOpenSubmenusProps}>
+        <MenuItem>test item 0</MenuItem>
+        <Submenu title="submenu" index="submenu_test">
+          <MenuItem>test item 1</MenuItem>
+          <MenuItem>test item 2</MenuItem>
+        </Submenu>
+      </Menu>
+    );
+    const popperEl = wrapper.container.querySelector('.woo-submenu-list');
+    expect(popperEl).toBeInTheDocument();
   });
 });
