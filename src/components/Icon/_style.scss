@@ -1,0 +1,7 @@
+@import '../../styles/var';
+
+@each $theme, $color in $theme-colors {
+  .woo-icon-#{$theme} {
+    color: #{$color};
+  }
+}

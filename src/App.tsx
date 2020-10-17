@@ -4,12 +4,24 @@ import Menu from './components/Menu/menu';
 import MenuItem from './components/Menu/menuItem';
 import Submenu from './components/Menu/submenu';
 
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faCoffee } from '@fortawesome/free-solid-svg-icons';
+
+import Icon from './components/Icon/icon';
+
 function App() {
   return (
     <div className="App">
+      {/* <Icon icon="coffee"></Icon> */}
+      <Icon icon="cheese" theme="primary" size="10x" />
+      <Icon icon="cheese" theme="warn" size="10x" />
+      <Icon icon="cheese" theme="light" size="10x" />
+      <Icon icon="cheese" theme="dark" size="10x" />
+      <Icon icon="coffee" theme="danger" size="10x" />
+      <Icon icon="check-square" theme="success" size="10x" />
       <Menu
         // selectedIndex="item_3"
-        selectedIndex="item_5_1"
+        // selectedIndex="item_5_1"
         // openedSubmenus={['item_5_2']}
         // openedSubmenus={['item_5']}
         // openedSubmenus={['item_5', 'item_5_2']}
@@ -25,7 +37,7 @@ function App() {
         onClose={(index) => {
           console.log(`关闭了 ${index}`);
         }}
-        trigger="hover"
+        // trigger="hover"
         // vertical
         // style={{ width: 200 }}
       >
