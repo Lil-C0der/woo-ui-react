@@ -35,12 +35,17 @@ const Submenu: FC<ISubmenuProps> = (props) => {
   // 类似 Vue 递归组件
   const submenuContext = useContext(SubmenuContext);
   // 根据 openedSubmenus 属性来判断是否展开
-  const [isOpen, setIsOpen] = useState(
-    menuContext.openedSubmenus?.includes(index as string)
-  );
+  const defaultOpenState = () => {
+    if (menuContext.openedSubmenus?.length) {
+      return menuContext.openedSubmenus?.includes(index as string);
+    } else {
+      return false;
+    }
+  };
+  const [isOpen, setIsOpen] = useState(defaultOpenState());
 
   // ref
-  const isOpenRef = useRef<boolean>(false);
+  const isOpenRef = useRef<boolean>(isOpen);
   const submenuDOMRef = useRef<HTMLLIElement>(null);
   const titleDOMRef = useRef<HTMLDivElement>(null);
 
