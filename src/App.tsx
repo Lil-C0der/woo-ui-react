@@ -12,7 +12,7 @@ function App() {
         selectedIndex="item_5_1"
         // openedSubmenus={['item_5_2']}
         // openedSubmenus={['item_5']}
-        openedSubmenus={['item_5', 'item_5_2']}
+        // openedSubmenus={['item_5', 'item_5_2']}
         onSelect={(index, e) => {
           console.log('选中了', index);
         }}
@@ -25,9 +25,9 @@ function App() {
         onClose={(index) => {
           console.log(`关闭了 ${index}`);
         }}
-        vertical
-        // trigger="hover"
-        style={{ width: 200 }}
+        trigger="hover"
+        // vertical
+        // style={{ width: 200 }}
       >
         <MenuItem>menu item 1</MenuItem>
         <MenuItem disabled>menu item 2</MenuItem>

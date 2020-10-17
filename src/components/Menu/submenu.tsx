@@ -72,18 +72,22 @@ const Submenu: FC<ISubmenuProps> = (props) => {
       }
     };
 
-    document.addEventListener('click', onDocClick);
+    menuContext.trigger === 'click' &&
+      document.addEventListener('click', onDocClick);
     return () => {
-      document.removeEventListener('click', onDocClick);
+      menuContext.trigger === 'click' &&
+        document.removeEventListener('click', onDocClick);
     };
-  }, [closePopper]);
+  }, [closePopper, menuContext.trigger, menuContext.vertical]);
 
   const onSubmenuClick = (e: React.MouseEvent) => {
     const target = e.target as HTMLElement;
 
-    if (titleDOMRef.current?.contains(target)) {
-      !isOpen && openPopper();
-      isOpen && closePopper();
+    if (menuContext.trigger === 'click') {
+      if (titleDOMRef.current?.contains(target)) {
+        !isOpen && openPopper();
+        isOpen && closePopper();
+      }
     }
     // 水平状态下，点击 item 关闭 popper
     if (!menuContext.vertical && target.className.includes('woo-menu-item')) {
@@ -109,12 +113,13 @@ const Submenu: FC<ISubmenuProps> = (props) => {
   // trigger 不同，绑定不同的事件
   const clickEvent: React.DOMAttributes<HTMLLIElement> =
     menuContext.trigger === 'click' ? { onClick: onSubmenuClick } : {};
-
+  // hover 方式触发时，点击 item 关闭 popper
   const hoverEvent: React.DOMAttributes<HTMLLIElement> =
     menuContext.trigger === 'hover'
       ? {
           onMouseEnter: onSubmenuMouseEnter,
-          onMouseLeave: onSubmenuMouseLeave
+          onMouseLeave: onSubmenuMouseLeave,
+          onClick: onSubmenuClick
         }
       : {};
 
@@ -134,7 +139,6 @@ const Submenu: FC<ISubmenuProps> = (props) => {
             index: `${props.index}_${i - otherElCount}`
           });
         }
-
         return childEl;
       } else {
         otherElCount++;
