@@ -13,12 +13,8 @@ function App() {
   return (
     <div className="App">
       {/* <Icon icon="coffee"></Icon> */}
-      <Icon icon="cheese" theme="primary" size="10x" />
-      <Icon icon="cheese" theme="warn" size="10x" />
-      <Icon icon="cheese" theme="light" size="10x" />
+      <Icon icon="angle-down" theme="light" size="10x" />
       <Icon icon="cheese" theme="dark" size="10x" />
-      <Icon icon="coffee" theme="danger" size="10x" />
-      <Icon icon="check-square" theme="success" size="10x" />
       <Menu
         // selectedIndex="item_3"
         // selectedIndex="item_5_1"
@@ -38,7 +34,7 @@ function App() {
           console.log(`关闭了 ${index}`);
         }}
         // trigger="hover"
-        // vertical
+        vertical
         // style={{ width: 200 }}
       >
         <MenuItem>menu item 1</MenuItem>

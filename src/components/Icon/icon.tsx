@@ -21,7 +21,7 @@ const Icon: FC<IIconProps> = (props) => {
   const { className, theme, ...restProps } = props;
   // console.log(icon);
 
-  const classes = classNames('woo-icon', classNames, {
+  const classes = classNames('woo-icon', className, {
     [`woo-icon-${theme}`]: theme
   });
   return <FontAwesomeIcon className={classes} {...restProps} />;

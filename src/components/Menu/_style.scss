@@ -67,20 +67,36 @@
     color: $color-grey;
     height: 48px;
     padding: 0 16px;
+    &-icon {
+      margin-bottom: -0.3em;
+      margin-left: 0.5em;
+      transition: all 0.3s;
+    }
+    &:hover {
+      color: $active-menu-item-color;
+    }
   }
-  .woo-submenu-list {
-    // 二级菜单里的 menu item 样式
-    .woo-menu-item {
-      justify-content: flex-start;
-      &-active {
-        font-weight: 400;
-        background-color: $menu-item-bg-active;
-        &::after {
-          content: none;
-        }
+  // 二级菜单里的 menu item 样式
+  .woo-submenu-list .woo-menu-item {
+    justify-content: flex-start;
+    &-active {
+      font-weight: 400;
+      background-color: $menu-item-bg-active;
+      &::after {
+        content: none;
       }
     }
   }
+}
+
+.woo-menu-vertical .woo-submenu-title-icon,
+.woo-submenu-popper .woo-submenu-title-icon {
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.submenu-opened .woo-submenu-title-icon {
+  transform: rotate(180deg);
 }
 
 .has-active-item {
@@ -111,6 +127,12 @@
       content: none;
     }
   }
+  .woo-submenu-title-icon {
+    transform: rotate(0);
+  }
+  .submenu-opened .woo-submenu-title-icon {
+    transform: rotate(180deg);
+  }
   // submenu 里的 submenu 组件的样式
   .woo-submenu-vertical {
     .woo-menu-item,
@@ -135,6 +157,12 @@
   .woo-menu-item,
   .woo-submenu-title {
     height: 30px;
+  }
+  .woo-submenu-title-icon {
+    transform: rotate(-90deg);
+  }
+  .submenu-opened .woo-submenu-title-icon {
+    transform: rotate(90deg);
   }
   // submenu 里的 submenu 组件的样式
   .woo-submenu-popper {

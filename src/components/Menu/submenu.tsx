@@ -12,6 +12,8 @@ import classNames from 'classnames';
 import { MenuContext } from './menu';
 import { IMenuItemProps } from './menuItem';
 
+import Icon from '../Icon/icon';
+
 export interface ISubmenuProps {
   index?: string;
   title: string;
@@ -90,7 +92,10 @@ const Submenu: FC<ISubmenuProps> = (props) => {
       }
     }
     // 水平状态下，点击 item 关闭 popper
-    if (!menuContext.vertical && target.className.includes('woo-menu-item')) {
+    if (
+      !menuContext.vertical &&
+      target.getAttribute('class')?.includes('woo-menu-item')
+    ) {
       closePopper();
     }
   };
@@ -151,7 +156,8 @@ const Submenu: FC<ISubmenuProps> = (props) => {
 
   // submenu wrapper 的 className
   const classes = classNames('woo-submenu', className, {
-    'has-active-item': menuContext.indexPath.includes(props.index as string)
+    'has-active-item': menuContext.indexPath.includes(props.index as string),
+    'submenu-opened': isOpen
   });
   // popper 的 className
   const popperClasses = classNames(
@@ -175,6 +181,7 @@ const Submenu: FC<ISubmenuProps> = (props) => {
     >
       <div className="woo-submenu-title" ref={titleDOMRef}>
         {title}
+        <Icon icon="angle-down" className="woo-submenu-title-icon" />
       </div>
       {/* 这个 context 传递 parentIndex */}
       <SubmenuContext.Provider value={passedContext}>
