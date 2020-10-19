@@ -13,6 +13,7 @@ import { MenuContext } from './menu';
 import { IMenuItemProps } from './menuItem';
 
 import Icon from '../Icon/icon';
+import { CSSTransition } from 'react-transition-group';
 
 export interface ISubmenuProps {
   index?: string;
@@ -185,9 +186,17 @@ const Submenu: FC<ISubmenuProps> = (props) => {
       </div>
       {/* 这个 context 传递 parentIndex */}
       <SubmenuContext.Provider value={passedContext}>
-        <ul style={isOpen ? {} : { display: 'none' }} className={popperClasses}>
-          {childComponenets}
-        </ul>
+        <CSSTransition
+          in={isOpen}
+          // classNames={menuContext.vertical ? 'slide-from-top' : 'fade'}
+          classNames="slide-from-top"
+          timeout={300}
+          appear
+          // exit 时卸载子节点
+          unmountOnExit
+        >
+          <ul className={popperClasses}>{childComponenets}</ul>
+        </CSSTransition>
       </SubmenuContext.Provider>
     </li>
   );

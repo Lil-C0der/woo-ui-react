@@ -1,0 +1,39 @@
+// React-Transition-Group 过渡效果
+// 从上往下展开
+.slide-from-top-enter-active,
+.slide-from-top-exit-active {
+  transition: all 0.3s;
+}
+.slide-from-top-enter {
+  opacity: 0;
+  transform: scaleY(0);
+}
+.slide-from-top-enter-active {
+  opacity: 1;
+  transform: scaleY(1);
+}
+.slide-from-top-exit {
+  opacity: 1;
+}
+.slide-from-top-exit-active {
+  opacity: 0;
+  transform: scaleY(0);
+}
+
+// 渐变
+.fade-enter-active,
+.fade-exit-active {
+  transition: all 0.3s;
+}
+.fade-enter {
+  opacity: 0;
+}
+.fade-enter-active {
+  opacity: 1;
+}
+.fade-exit {
+  opacity: 1;
+}
+.fade-exit-active {
+  opacity: 0;
+}

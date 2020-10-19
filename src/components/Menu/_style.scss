@@ -76,14 +76,17 @@
       color: $active-menu-item-color;
     }
   }
-  // 二级菜单里的 menu item 样式
-  .woo-submenu-list .woo-menu-item {
-    justify-content: flex-start;
-    &-active {
-      font-weight: 400;
-      background-color: $menu-item-bg-active;
-      &::after {
-        content: none;
+  &-list {
+    transform-origin: top;
+    // 二级菜单里的 menu item 样式
+    .woo-menu-item {
+      justify-content: flex-start;
+      &-active {
+        font-weight: 400;
+        background-color: $menu-item-bg-active;
+        &::after {
+          content: none;
+        }
       }
     }
   }
@@ -145,7 +148,7 @@
 .woo-submenu-popper {
   position: absolute;
   top: 100%;
-  transform: translateY(4px);
+  margin-top: 4px;
   border: 1px solid $border-color;
   background-color: $layout-bg-color;
   white-space: nowrap;
@@ -167,7 +170,8 @@
   // submenu 里的 submenu 组件的样式
   .woo-submenu-popper {
     left: 100%;
-    transform: translateX(4px) translateY(-30px);
+    margin-left: 4px;
+    margin-top: -30px;
   }
   .has-active-item {
     .woo-submenu-title {
