@@ -42,11 +42,11 @@
   .zoom-in-#{$direction}-enter-active,
   .zoom-in-#{$direction}-exit-active {
     transition: all 0.3s;
-    transform-origin: $origin;
   }
   .zoom-in-#{$direction}-enter {
     opacity: 0;
     transform: $scaleStart;
+    transform-origin: $origin;
   }
   .zoom-in-#{$direction}-enter-active {
     opacity: 1;
@@ -54,6 +54,7 @@
   }
   .zoom-in-#{$direction}-exit {
     opacity: 1;
+    transform-origin: $origin;
   }
   .zoom-in-#{$direction}-exit-active {
     opacity: 0;
@@ -62,21 +63,21 @@
 }
 
 // 渐变过渡效果
-@mixin fade-animation($opacityStart: 0, $opaCityEnd: 1) {
+@mixin fade-animation($opacityStart: 0, $opacityEnd: 1) {
   .fade-enter-active,
   .fade-exit-active {
     transition: all 0.3s;
   }
   .fade-enter {
-    opacity: $opaCityStart;
+    opacity: $opacityStart;
   }
   .fade-enter-active {
-    opacity: $opaCityEnd;
+    opacity: $opacityEnd;
   }
   .fade-exit {
-    opacity: $opaCityEnd;
+    opacity: $opacityEnd;
   }
   .fade-exit-active {
-    opacity: $opaCityStart;
+    opacity: $opacityStart;
   }
 }
