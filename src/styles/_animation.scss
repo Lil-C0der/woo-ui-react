@@ -1,39 +1,7 @@
 // React-Transition-Group 过渡效果
-// 从上往下展开
-.slide-from-top-enter-active,
-.slide-from-top-exit-active {
-  transition: all 0.3s;
-}
-.slide-from-top-enter {
-  opacity: 0;
-  transform: scaleY(0);
-}
-.slide-from-top-enter-active {
-  opacity: 1;
-  transform: scaleY(1);
-}
-.slide-from-top-exit {
-  opacity: 1;
-}
-.slide-from-top-exit-active {
-  opacity: 0;
-  transform: scaleY(0);
-}
 
-// 渐变
-.fade-enter-active,
-.fade-exit-active {
-  transition: all 0.3s;
-}
-.fade-enter {
-  opacity: 0;
-}
-.fade-enter-active {
-  opacity: 1;
-}
-.fade-exit {
-  opacity: 1;
-}
-.fade-exit-active {
-  opacity: 0;
-}
+// 从上往下展开
+@include zoom-in-animation('top', scaleY(0), scaleY(1), center top);
+@include zoom-in-animation('bottom', scaleY(0), scaleY(1), center bottom);
+@include zoom-in-animation('left', scale(0.45, 0.45), scale(1, 1), left top);
+@include zoom-in-animation('right', scale(0.45, 0.45), scale(1, 1), right top);

@@ -31,3 +31,52 @@
     background-color: $bg-active;
   }
 }
+
+// 展开过渡效果
+@mixin zoom-in-animation(
+  $direction: 'top',
+  $scaleStart: scaleY(0),
+  $scaleEnd: scaleY(1),
+  $origin: center top
+) {
+  .zoom-in-#{$direction}-enter-active,
+  .zoom-in-#{$direction}-exit-active {
+    transition: all 0.3s;
+    transform-origin: $origin;
+  }
+  .zoom-in-#{$direction}-enter {
+    opacity: 0;
+    transform: $scaleStart;
+  }
+  .zoom-in-#{$direction}-enter-active {
+    opacity: 1;
+    transform: $scaleEnd;
+  }
+  .zoom-in-#{$direction}-exit {
+    opacity: 1;
+  }
+  .zoom-in-#{$direction}-exit-active {
+    opacity: 0;
+    transform: $scaleStart;
+  }
+}
+
+// 渐变过渡效果
+@mixin fade-animation($opacityStart: 0, $opaCityEnd: 1) {
+  .fade-enter-active,
+  .fade-exit-active {
+    transition: all 0.3s;
+  }
+  .fade-enter {
+    opacity: $opaCityStart;
+  }
+  .fade-enter-active {
+    opacity: $opaCityEnd;
+  }
+  .fade-exit {
+    opacity: $opaCityEnd;
+  }
+  .fade-exit-active {
+    opacity: $opaCityStart;
+  }
+}
