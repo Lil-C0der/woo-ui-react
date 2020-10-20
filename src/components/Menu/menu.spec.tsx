@@ -167,8 +167,8 @@ describe('Menu 组件', () => {
     );
 
     const submenuEl = wrapper.getByText('submenu');
-    const menuItemEl = wrapper.getByText('test item 1');
-    expect(menuItemEl).not.toBeVisible();
+    let menuItemEl = wrapper.queryByText('test item 1');
+    expect(menuItemEl).toEqual(null);
 
     jest.useFakeTimers();
     act(() => {
@@ -176,6 +176,7 @@ describe('Menu 组件', () => {
       jest.advanceTimersByTime(500);
     });
     expect(testTriggerProps.onOpen).toHaveBeenCalledWith('submenu_test');
+    menuItemEl = wrapper.queryByText('test item 1');
     expect(menuItemEl).toBeVisible();
 
     act(() => {
@@ -183,7 +184,6 @@ describe('Menu 组件', () => {
       jest.advanceTimersByTime(500);
     });
     expect(testTriggerProps.onClose).toHaveBeenCalledWith('submenu_test');
-    expect(menuItemEl).not.toBeVisible();
 
     jest.useRealTimers();
   });
