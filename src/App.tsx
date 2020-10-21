@@ -1,20 +1,47 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from './components/Button/button';
 import Menu from './components/Menu/menu';
 import MenuItem from './components/Menu/menuItem';
 import Submenu from './components/Menu/submenu';
-
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faCoffee } from '@fortawesome/free-solid-svg-icons';
+import Transition from './components/Transition/transition';
 
 import Icon from './components/Icon/icon';
 
 function App() {
+  const [showText, setShowText] = useState(false);
   return (
-    <div className="App">
-      {/* <Icon icon="coffee"></Icon> */}
-      <Icon icon="angle-down" theme="light" size="10x" />
-      <Icon icon="cheese" theme="dark" size="10x" />
+    <div className="App" style={{ padding: 10 }}>
+      {/* <Icon icon="angle-down" theme="light" size="10x" /> */}
+      {/* <Icon icon="cheese" theme="dark" size="10x" /> */}
+
+      <Button
+        size="lg"
+        onClick={() => {
+          setShowText(!showText);
+        }}
+      >
+        Toggle
+      </Button>
+      <div style={{ width: 200, height: 200 }}>
+        <Transition in={showText} timeout={300} animation="zoom-in-left">
+          <div>
+            <p>TEXT</p>
+            <p>TEXT</p>
+            <p>TEXT</p>
+          </div>
+        </Transition>
+        <Transition
+          in={showText}
+          timeout={300}
+          animation="zoom-in-bottom"
+          wrapper
+        >
+          <Button size="lg" btnType="primary">
+            BIG Button
+          </Button>
+        </Transition>
+      </div>
+
       <Menu
         // selectedIndex="item_3"
         // selectedIndex="item_5_1"

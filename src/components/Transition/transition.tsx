@@ -11,17 +11,19 @@ type AnimationName =
 
 type TransitionProps = CSSTransitionProps & {
   animation?: AnimationName;
+  // 添加 wrapper 属性，防止 transition 和 transform 覆盖原有样式
+  wrapper?: boolean;
 };
 
 const Transition: FC<TransitionProps> = (props) => {
-  const { animation, classNames, children, ...restProps } = props;
+  const { animation, wrapper, classNames, children, ...restProps } = props;
 
   return (
     <CSSTransition
       classNames={animation ? animation : classNames}
       {...restProps}
     >
-      {children}
+      {wrapper ? <div>{children}</div> : children}
     </CSSTransition>
   );
 };
@@ -29,7 +31,8 @@ const Transition: FC<TransitionProps> = (props) => {
 Transition.defaultProps = {
   appear: true,
   // exit 时默认卸载子节点
-  unmountOnExit: true
+  unmountOnExit: true,
+  wrapper: false
 };
 
 export default Transition;
