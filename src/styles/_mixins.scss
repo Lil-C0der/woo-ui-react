@@ -1,6 +1,7 @@
 @mixin button-size($padding-x, $height, $font-size, $b-radius) {
   padding: 0 $padding-x;
   height: $height;
+  line-height: $height;
   font-size: $font-size;
   border-radius: $b-radius;
 }
@@ -22,11 +23,6 @@
     border-color: $border-color-hover;
   }
   &:active {
-    color: $color-active;
-    background-color: $bg-active;
-  }
-  &:focus {
-    outline: none;
     color: $color-active;
     background-color: $bg-active;
   }
