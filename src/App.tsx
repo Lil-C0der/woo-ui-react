@@ -72,7 +72,7 @@ function App() {
 
         <Submenu title="submenu">
           <MenuItem>menu item 6</MenuItem>
-          <MenuItem>menu item 7</MenuItem>
+          <MenuItem disabled>menu item 7</MenuItem>
           <Submenu title="submenu">
             <MenuItem>menu item 8</MenuItem>
             <MenuItem>menu item 9</MenuItem>

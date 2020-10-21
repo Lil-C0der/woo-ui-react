@@ -31,8 +31,7 @@
     }
     &-disabled {
       color: $disabled-color;
-      pointer-events: none;
-      cursor: default;
+      cursor: not-allowed;
     }
   }
 }
