@@ -76,17 +76,14 @@
       color: $active-menu-item-color;
     }
   }
-  &-list {
-    transform-origin: top;
-    // 二级菜单里的 menu item 样式
-    .woo-menu-item {
-      justify-content: flex-start;
-      &-active {
-        font-weight: 400;
-        background-color: $menu-item-bg-active;
-        &::after {
-          content: none;
-        }
+  // 二级菜单里的 menu item 样式
+  &-list .woo-menu-item {
+    justify-content: flex-start;
+    &-active {
+      font-weight: 400;
+      background-color: $menu-item-bg-active;
+      &::after {
+        content: none;
       }
     }
   }
