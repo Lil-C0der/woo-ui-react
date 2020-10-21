@@ -19,8 +19,17 @@ type ButtonType =
 
 export interface IBaseButtonProps {
   className?: string;
+  /**
+   * 是否禁用按钮
+   */
   disabled?: boolean;
+  /**
+   * 按钮的尺寸
+   */
   size?: ButtonSize;
+  /**
+   * Is this the principal call to action on the page?
+   */
   btnType?: ButtonType;
   href?: string;
   children: ReactNode;
