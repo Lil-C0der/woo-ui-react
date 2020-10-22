@@ -19,17 +19,8 @@ type ButtonType =
 
 export interface IBaseButtonProps {
   className?: string;
-  /**
-   * 是否禁用按钮
-   */
   disabled?: boolean;
-  /**
-   * 按钮的尺寸
-   */
   size?: ButtonSize;
-  /**
-   * Is this the principal call to action on the page?
-   */
   btnType?: ButtonType;
   href?: string;
   children: ReactNode;
@@ -41,7 +32,6 @@ type AnchorButtonProps = IBaseButtonProps & AnchorHTMLAttributes<HTMLElement>;
 
 // 利用工具泛型 Partial 将组件所有的 props 变为可选的
 export type IButtonProps = Partial<NativeButtonProps & AnchorButtonProps>;
-// export type ButtonProps = Partial<NativeButtonProps & AnchorButtonProps>;
 
 // 重新定义类型后，可以获取到原生的属性，例如 onCLick 等
 const Button: FC<IButtonProps> = (props) => {

@@ -14,6 +14,8 @@ function App() {
       {/* <Icon icon="angle-down" theme="light" size="10x" /> */}
       {/* <Icon icon="cheese" theme="dark" size="10x" /> */}
 
+      <Button href="https://www.baidu.com">link</Button>
+
       <Button
         size="lg"
         onClick={() => {
