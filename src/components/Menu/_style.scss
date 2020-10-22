@@ -67,8 +67,9 @@
     height: 48px;
     padding: 0 16px;
     &-icon {
+      position: absolute;
+      right: 0.25em;
       margin-bottom: -0.3em;
-      margin-left: 0.5em;
       transition: all 0.3s;
     }
     &:hover {
@@ -86,12 +87,6 @@
       }
     }
   }
-}
-
-.woo-menu-vertical .woo-submenu-title-icon,
-.woo-submenu-popper .woo-submenu-title-icon {
-  margin-left: auto;
-  margin-right: 0;
 }
 
 .submenu-opened .woo-submenu-title-icon {
