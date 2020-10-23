@@ -2,6 +2,7 @@ import React, {
   CSSProperties,
   FC,
   FunctionComponentElement,
+  useRef,
   useState
 } from 'react';
 import classNames from 'classnames';
@@ -46,6 +47,7 @@ interface IMenuContext {
   onItemClick?: ClickCallback;
   onOpen?: IMenuProps['onOpen'];
   onClose?: IMenuProps['onClose'];
+  menuDOMRef: React.RefObject<HTMLUListElement> | null;
 }
 
 // 创建的 context 对象
@@ -55,7 +57,8 @@ export const MenuContext = React.createContext<IMenuContext>({
   trigger: 'click',
   vertical: false,
   indexPath: [],
-  initPath: (path) => {}
+  initPath: (path) => {},
+  menuDOMRef: null
 });
 
 const Menu: FC<IMenuProps> = (props) => {
@@ -80,6 +83,8 @@ const Menu: FC<IMenuProps> = (props) => {
   // 用 useState hook 来控制 selected-index
   const [currSelectedIdx, setSelectIdx] = useState(selectedIndex);
   const [indexPath, setIndexPath] = useState(['item_0']);
+
+  const menuDOMRef = useRef<HTMLUListElement>(null);
 
   const initPath = (path: Array<string>) => {
     setIndexPath(path);
@@ -111,7 +116,8 @@ const Menu: FC<IMenuProps> = (props) => {
     initPath,
     onItemClick,
     onOpen,
-    onClose
+    onClose,
+    menuDOMRef
   };
 
   // 只渲染子元素中特定 displayName 的元素
@@ -141,7 +147,7 @@ const Menu: FC<IMenuProps> = (props) => {
   };
 
   return (
-    <ul className={classes} style={style}>
+    <ul className={classes} style={style} ref={menuDOMRef}>
       <MenuContext.Provider value={passedContext}>
         {renderChildren()}
       </MenuContext.Provider>

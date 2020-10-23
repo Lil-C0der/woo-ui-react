@@ -71,8 +71,20 @@ const Submenu: FC<ISubmenuProps> = (props) => {
     const onDocClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       // 点击页面其他地方时关闭 popper
-      if (!submenuDOMRef.current?.contains(target) && isOpenRef.current) {
-        closePopper();
+      if (!menuContext.vertical) {
+        // 水平状态下点击 Submenu 外关闭 popper
+        if (!submenuDOMRef.current?.contains(target) && isOpenRef.current) {
+          closePopper();
+        }
+      } else {
+        // 垂直状态下点击 Menu 的其他 item 不会关闭 Submenu
+        // 只有点击 Menu 外才会关闭 Submenu
+        if (
+          !menuContext.menuDOMRef?.current?.contains(target) &&
+          isOpenRef.current
+        ) {
+          closePopper();
+        }
       }
     };
 
@@ -82,8 +94,14 @@ const Submenu: FC<ISubmenuProps> = (props) => {
       menuContext.trigger === 'click' &&
         document.removeEventListener('click', onDocClick);
     };
-  }, [closePopper, menuContext.trigger, menuContext.vertical]);
+  }, [
+    closePopper,
+    menuContext.menuDOMRef,
+    menuContext.trigger,
+    menuContext.vertical
+  ]);
 
+  // submenu 的 title 以及 item 被点击时的 handler
   const onSubmenuClick = (e: React.MouseEvent) => {
     const target = e.target as HTMLElement;
 
@@ -93,7 +111,7 @@ const Submenu: FC<ISubmenuProps> = (props) => {
         isOpen && closePopper();
       }
     }
-    // 水平状态下，点击 item 关闭 popper
+    // 水平状态下，点击 Submenu 内的 item 关闭 popper
     if (
       !menuContext.vertical &&
       target.getAttribute('class')?.includes('woo-menu-item')

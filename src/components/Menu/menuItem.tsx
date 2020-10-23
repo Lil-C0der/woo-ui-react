@@ -53,7 +53,6 @@ const MenuItem: FC<IMenuItemProps> = (props) => {
 };
 
 MenuItem.defaultProps = {
-  // index:,
   disabled: false
 };
 
