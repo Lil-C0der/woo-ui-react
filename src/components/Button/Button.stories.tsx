@@ -71,8 +71,9 @@ export default {
     },
     onClick: {
       description: '点击按钮时触发的回调',
+      control: false,
       type: {
-        summary: '(e) => void'
+        summary: '(e: React.MouseEvent) => void'
       }
     }
   }
@@ -87,8 +88,8 @@ NormalButton.args = {
   children: 'Normal',
   disabled: false,
   btnType: 'normal',
-  onClick: () => {
-    action('it is a basic button');
+  onClick: (e) => {
+    action('it is a basic button')(e);
     console.log('it is a basic button');
   }
 };
