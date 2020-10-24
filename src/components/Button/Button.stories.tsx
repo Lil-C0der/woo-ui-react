@@ -1,7 +1,6 @@
 import React from 'react';
 // also exported from '@storybook/react' if you can deal with breaking changes in 6.1
 import { Story, Meta } from '@storybook/react/types-6-0';
-import { action } from '@storybook/addon-actions';
 
 import Button, { IButtonProps } from './button';
 
@@ -79,37 +78,13 @@ export default {
   }
 } as Meta;
 
-const Template: Story<IButtonProps> = (args) => (
-  <Button {...args}>{args.children}</Button>
-);
+const Template: Story<IButtonProps> = (args) => <Button {...args}></Button>;
 
 export const NormalButton = Template.bind({});
 NormalButton.args = {
   children: 'Normal',
   disabled: false,
-  btnType: 'normal',
-  onClick: (e) => {
-    action('it is a basic button')(e);
-    console.log('it is a basic button');
-  }
-};
-
-NormalButton.parameters = {
-  docs: {
-    source: {
-      code: `
-<Button
-  btnType="normal"
-  disabled={false}
-  onClick={() => {
-    console.log('it is a basic button');
-  }}
->
-  Normal
-</Button>
-      `
-    }
-  }
+  btnType: 'normal'
 };
 
 const buttonTypeDemo: Story = () => (
@@ -128,7 +103,7 @@ export const ButtonType = buttonTypeDemo.bind({});
 ButtonType.parameters = {
   docs: {
     description: {
-      component:
+      story:
         '通过 `btnType` 属性来设置按钮的类型，类型为 `link` 时，按钮的行为和 a 标签一致'
     }
   }
@@ -147,7 +122,7 @@ export const ButtonSize = buttonSizeDemo.bind({});
 ButtonSize.parameters = {
   docs: {
     description: {
-      component: '通过 `size` 属性来设置按钮的大小'
+      story: '通过 `size` 属性来设置按钮的大小'
     }
   }
 };
