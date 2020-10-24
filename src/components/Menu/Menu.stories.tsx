@@ -3,12 +3,18 @@ import React from 'react';
 import { Story, Meta } from '@storybook/react/types-6-0';
 
 import Menu, { IMenuProps } from './menu';
-import MenuItem from './menuItem';
+import MenuItem, { IMenuItemProps } from './menuItem';
 import Submenu from './submenu';
+
+import { MenuItemProps, SubmenuProps } from './Subcomponents.stories';
 
 export default {
   title: '菜单 Menu',
   component: Menu,
+  subcomponents: {
+    MenuItemProps,
+    SubmenuProps
+  },
   parameters: {
     docs: {
       description: {
@@ -86,24 +92,43 @@ export default {
   }
 } as Meta;
 
+// const Template: Story<IMenuProps> = (args) => (
+//   <div style={{ minHeight: 200, minWidth: 200 }}>
+//     <Menu {...args}>
+//       <MenuItem index="item_1">menu item 1</MenuItem>
+//       <MenuItem disabled index="item_2">
+//         menu item 2
+//       </MenuItem>
+//       <Submenu title="menu item 3" index="item_3">
+//         <MenuItem index="item_4_1">menu item 3-1</MenuItem>
+//         <MenuItem disabled index="item_3_2">
+//           menu item 3-2
+//         </MenuItem>
+//         <Submenu title="item_3_2" index="item_3_2">
+//           <MenuItem index="item_3_2_1">menu item 3-2-1</MenuItem>
+//           <MenuItem index="item_3_2_2">menu item 3-2-2</MenuItem>
+//         </Submenu>
+//       </Submenu>
+//       <MenuItem index="item_4">menu item 4</MenuItem>
+//     </Menu>
+//   </div>
+// );
+
 const Template: Story<IMenuProps> = (args) => (
   <div style={{ minHeight: 200, minWidth: 200 }}>
     <Menu {...args}>
-      <MenuItem index="item_1">menu item 1</MenuItem>
-      <MenuItem disabled index="item_2">
-        menu item 2
-      </MenuItem>
-      <Submenu title="menu item 3" index="item_3">
-        <MenuItem index="item_4_1">menu item 3-1</MenuItem>
-        <MenuItem disabled index="item_3_2">
-          menu item 3-2
-        </MenuItem>
-        <Submenu title="item_3_2" index="item_3_2">
-          <MenuItem index="item_3_2_1">menu item 3-2-1</MenuItem>
-          <MenuItem index="item_3_2_2">menu item 3-2-2</MenuItem>
-        </Submenu>
-      </Submenu>
-      <MenuItem index="item_4">menu item 4</MenuItem>
+      {/* TODO 重构 MenuItemProps 和 SubmenuProps 
+      接收 element 的配置作为参数，返回多个 JSX.Element */}
+
+      {MenuItemProps({ index: 'item_1', children: 'item 1' })}
+      {MenuItemProps({ index: 'item_2', children: 'item 2', disabled: true })}
+      {SubmenuProps({
+        title: 'menu item 3',
+        index: 'item_3',
+        children: MenuItemProps({ index: 'item_3_1', children: 'item 3-1' })
+      })}
+      {/* {MenuItemProps({ index: 'item_3', children: 'item 3' })} */}
+      {/* {MenuItemProps({ index: 'item_4', children: 'item 4' })} */}
     </Menu>
   </div>
 );
@@ -114,91 +139,97 @@ BasicMenu.args = {
   trigger: 'click',
   vertical: false
 };
-BasicMenu.parameters = {
-  docs: {
-    source: {
-      code: `
-<div style={{ minHeight: 200, minWidth: 200 }}>
-  <Menu
-    selectedIndex="item_4"
-    trigger="click"
-    vertical
-    onClick={() => {}}
-    onSelect={() => {}}
-    onOpen={{() => {}}}
-    onClose={{() => {}}}
-  >
-    <MenuItem index="item_1">menu item 1</MenuItem>
-    <MenuItem disabled index="item_2">menu item 2</MenuItem>
-    <Submenu title="menu item 3" index="item_3">
-      <MenuItem index="item_4_1">menu item 3-1</MenuItem>
-      <MenuItem disabled index="item_3_2">menu item 3-2</MenuItem>
-      <Submenu title="item_3_2" index="item_3_2">
-        <MenuItem index="item_3_2_1">menu item 3-2-1</MenuItem>
-        <MenuItem index="item_3_2_2">menu item 3-2-2</MenuItem>
-      </Submenu>
-    </Submenu>
-    <MenuItem index="item_4">menu item 4</MenuItem>
-  </Menu>
-</div>
-    `
-    }
-  }
-};
 
-const openSubmenusDemo: Story<IMenuProps> = (args) => (
-  <Menu style={{ width: 200, minHeight: 380 }} {...args}>
-    <MenuItem index="item_1">menu item 1</MenuItem>
-    <Submenu title="menu item 2" index="item_2">
-      <MenuItem disabled index="item_2_1">
-        menu item 2-1
-      </MenuItem>
-      <MenuItem index="item_2_2">menu item 2-2</MenuItem>
-    </Submenu>
-    <MenuItem index="item_3">menu item 3</MenuItem>
-    <Submenu title="menu item 4" index="item_4">
-      <MenuItem index="item_4_1">menu item 4-1</MenuItem>
-    </Submenu>
-  </Menu>
-);
-export const openedSubmenus = openSubmenusDemo.bind({});
-openedSubmenus.args = {
-  openedSubmenus: ['item_2', 'item_4'],
-  selectedIndex: 'item_2_2',
-  vertical: true,
-  trigger: 'click'
-};
-openedSubmenus.parameters = {
-  docs: {
-    description: {
-      story: '通过 `openSubmenus` 数组来指定多个默认展开的二级菜单'
-    },
-    source: {
-      code: `
-<Menu
-  style={{ width: 200, minHeight: 380 }}
-  vertical
-  openedSubmenus={['item_2', 'item_4']}
-  selectedIndex="item_2_2"
-  trigger="click"
-  onClick={() => {}}
-  onSelect={() => {}}
-  onOpen={{() => {}}}
-  onClose={{() => {}}}
->
-  <MenuItem index="item_1">menu item 1</MenuItem>
-  <Submenu title="menu item 2" index="item_2">
-    <MenuItem disabled index="item_2_1">menu item 2-1</MenuItem>
-    <MenuItem index="item_2_2">menu item 2-2</MenuItem>
-  </Submenu>
-  <MenuItem index="item_3">menu item 3</MenuItem>
-  <Submenu title="menu item 4" index="item_4">
-    <MenuItem index="item_4_1">menu item 4-1</MenuItem>
-  </Submenu>
-</Menu>
-      `
-    }
-  }
-};
+// MenuItem.args = {
+//   disabled: false,
+//   index: '1',
+//   children:'item 1'
+// };
+// MenuItem({ disabled: false, index: '1', children: 'item 1' });
 
-// TODO 添加子组件的 props 表格
+// BasicMenu.parameters = {
+//   docs: {
+//     source: {
+//       code: `
+// <div style={{ minHeight: 200, minWidth: 200 }}>
+//   <Menu
+//     selectedIndex="item_4"
+//     trigger="click"
+//     vertical
+//     onClick={() => {}}
+//     onSelect={() => {}}
+//     onOpen={{() => {}}}
+//     onClose={{() => {}}}
+//   >
+//     <MenuItem index="item_1">menu item 1</MenuItem>
+//     <MenuItem disabled index="item_2">menu item 2</MenuItem>
+//     <Submenu title="menu item 3" index="item_3">
+//       <MenuItem index="item_4_1">menu item 3-1</MenuItem>
+//       <MenuItem disabled index="item_3_2">menu item 3-2</MenuItem>
+//       <Submenu title="item_3_2" index="item_3_2">
+//         <MenuItem index="item_3_2_1">menu item 3-2-1</MenuItem>
+//         <MenuItem index="item_3_2_2">menu item 3-2-2</MenuItem>
+//       </Submenu>
+//     </Submenu>
+//     <MenuItem index="item_4">menu item 4</MenuItem>
+//   </Menu>
+// </div>
+//     `
+//     }
+//   }
+// };
+
+// const openSubmenusDemo: Story<IMenuProps> = (args) => (
+//   <Menu style={{ width: 200, minHeight: 380 }} {...args}>
+//     <MenuItem index="item_1">menu item 1</MenuItem>
+//     <Submenu title="menu item 2" index="item_2">
+//       <MenuItem disabled index="item_2_1">
+//         menu item 2-1
+//       </MenuItem>
+//       <MenuItem index="item_2_2">menu item 2-2</MenuItem>
+//     </Submenu>
+//     <MenuItem index="item_3">menu item 3</MenuItem>
+//     <Submenu title="menu item 4" index="item_4">
+//       <MenuItem index="item_4_1">menu item 4-1</MenuItem>
+//     </Submenu>
+//   </Menu>
+// );
+// export const openedSubmenus = openSubmenusDemo.bind({});
+// openedSubmenus.args = {
+//   openedSubmenus: ['item_2', 'item_4'],
+//   selectedIndex: 'item_2_2',
+//   vertical: true,
+//   trigger: 'click'
+// };
+// openedSubmenus.parameters = {
+//   docs: {
+//     description: {
+//       story: '通过 `openSubmenus` 数组来指定多个默认展开的二级菜单'
+//     },
+//     source: {
+//       code: `
+// <Menu
+//   style={{ width: 200, minHeight: 380 }}
+//   vertical
+//   openedSubmenus={['item_2', 'item_4']}
+//   selectedIndex="item_2_2"
+//   trigger="click"
+//   onClick={() => {}}
+//   onSelect={() => {}}
+//   onOpen={{() => {}}}
+//   onClose={{() => {}}}
+// >
+//   <MenuItem index="item_1">menu item 1</MenuItem>
+//   <Submenu title="menu item 2" index="item_2">
+//     <MenuItem disabled index="item_2_1">menu item 2-1</MenuItem>
+//     <MenuItem index="item_2_2">menu item 2-2</MenuItem>
+//   </Submenu>
+//   <MenuItem index="item_3">menu item 3</MenuItem>
+//   <Submenu title="menu item 4" index="item_4">
+//     <MenuItem index="item_4_1">menu item 4-1</MenuItem>
+//   </Submenu>
+// </Menu>
+//       `
+//     }
+//   }
+// };
