@@ -1,20 +1,24 @@
 import React from 'react';
-import { Interface } from 'readline';
 // also exported from '@storybook/react' if you can deal with breaking changes in 6.1
 
 import MenuItem from './menuItem';
-import Submenu, { ISubmenuProps } from './submenu';
+import Submenu from './submenu';
 
 export const MenuItemProps = ({
   disabled = false,
   index = 'item_${item 的索引}',
-  children = ''
+  children = '' as React.ReactNode
 }) => (
-  <MenuItem disabled={disabled} index={index}>
+  <MenuItem disabled={disabled} index={index} key={index}>
     {children}
   </MenuItem>
 );
 
-export const SubmenuProps = (
-  args: ISubmenuProps & { children: React.ReactNode }
-) => <Submenu {...args}></Submenu>;
+interface SubmenuProps {
+  title: string;
+  index?: string;
+  children?: React.ReactNode;
+}
+export const SubmenuProps = (args: SubmenuProps) => (
+  <Submenu {...args}></Submenu>
+);

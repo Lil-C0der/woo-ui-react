@@ -3,8 +3,8 @@ import React from 'react';
 import { Story, Meta } from '@storybook/react/types-6-0';
 
 import Menu, { IMenuProps } from './menu';
-import MenuItem, { IMenuItemProps } from './menuItem';
-import Submenu from './submenu';
+// import MenuItem, { IMenuItemProps } from './menuItem';
+// import Submenu from './submenu';
 
 import { MenuItemProps, SubmenuProps } from './Subcomponents.stories';
 
@@ -92,43 +92,65 @@ export default {
   }
 } as Meta;
 
-// const Template: Story<IMenuProps> = (args) => (
-//   <div style={{ minHeight: 200, minWidth: 200 }}>
-//     <Menu {...args}>
-//       <MenuItem index="item_1">menu item 1</MenuItem>
-//       <MenuItem disabled index="item_2">
-//         menu item 2
-//       </MenuItem>
-//       <Submenu title="menu item 3" index="item_3">
-//         <MenuItem index="item_4_1">menu item 3-1</MenuItem>
-//         <MenuItem disabled index="item_3_2">
-//           menu item 3-2
-//         </MenuItem>
-//         <Submenu title="item_3_2" index="item_3_2">
-//           <MenuItem index="item_3_2_1">menu item 3-2-1</MenuItem>
-//           <MenuItem index="item_3_2_2">menu item 3-2-2</MenuItem>
-//         </Submenu>
-//       </Submenu>
-//       <MenuItem index="item_4">menu item 4</MenuItem>
-//     </Menu>
-//   </div>
-// );
+interface itemOptions {
+  disabled?: boolean;
+  index?: string;
+  children?: React.ReactNode;
+}
+/**
+ * 根据 Menu Item 的 props 数组生成多个 menu item 元素
+ * @param {Array<itemOptions>} list
+ * @return {Menu Items}  {Array<JSX.Element>}
+ */
+const renderItems = (list: Array<itemOptions>): Array<JSX.Element> =>
+  list.map(({ disabled = false, index, children }) =>
+    MenuItemProps({ disabled, index, children })
+  );
+
+interface submenuOptions {
+  title: string;
+  index?: string;
+  childrenOptions?: Array<itemOptions | submenuOptions>;
+}
+/**
+ * 根据 Submenu 的配置对象生成一个 submenu 元素
+ * @param {submenuOptions} submenuOptions
+ * @return {SubmenuElement}  {JSX.Element}
+ */
+const renderSubmenu = (submenuOptions: submenuOptions): JSX.Element => {
+  const { title, index, childrenOptions } = submenuOptions;
+  // submenu 的 children props
+  const childEl = childrenOptions?.map((option) => {
+    const submenuOption = option as submenuOptions;
+    if (submenuOption.title) {
+      return renderSubmenu(submenuOption);
+    } else {
+      return MenuItemProps(option as itemOptions);
+    }
+  });
+  return SubmenuProps({ title, index, children: childEl });
+};
 
 const Template: Story<IMenuProps> = (args) => (
   <div style={{ minHeight: 200, minWidth: 200 }}>
     <Menu {...args}>
-      {/* TODO 重构 MenuItemProps 和 SubmenuProps 
-      接收 element 的配置作为参数，返回多个 JSX.Element */}
-
-      {MenuItemProps({ index: 'item_1', children: 'item 1' })}
-      {MenuItemProps({ index: 'item_2', children: 'item 2', disabled: true })}
-      {SubmenuProps({
-        title: 'menu item 3',
+      {renderItems([
+        { index: 'item_1', children: 'item 1' },
+        { index: 'item_2', children: 'item 2', disabled: true }
+      ])}
+      {renderSubmenu({
         index: 'item_3',
-        children: MenuItemProps({ index: 'item_3_1', children: 'item 3-1' })
+        title: 'item 3',
+        childrenOptions: [
+          { index: 'item_3_1', children: 'item 3-1' },
+          { index: 'item_3_2', children: 'item 3-2', disabled: true },
+          {
+            index: 'item_3_3',
+            title: 'item 3-3',
+            childrenOptions: [{ index: 'item_3_3_1', children: 'item 3-3-1' }]
+          }
+        ]
       })}
-      {/* {MenuItemProps({ index: 'item_3', children: 'item 3' })} */}
-      {/* {MenuItemProps({ index: 'item_4', children: 'item 4' })} */}
     </Menu>
   </div>
 );
