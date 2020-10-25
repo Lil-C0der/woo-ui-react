@@ -114,6 +114,9 @@
 }
 
 .woo-submenu-vertical {
+  position: relative;
+  transition: all 0.3s;
+  overflow: hidden;
   .woo-menu-item,
   .woo-submenu-title {
     height: 40px;

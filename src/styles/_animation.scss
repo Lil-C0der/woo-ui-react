@@ -1,7 +1,9 @@
 // React-Transition-Group 过渡效果
-
 // 从上往下展开
 @include zoom-in-animation('top', scaleY(0), scaleY(1), center top);
+@include zoom-in-animation('top', 0, 1, center top);
 @include zoom-in-animation('bottom', scaleY(0), scaleY(1), center bottom);
 @include zoom-in-animation('left', scale(0.45, 0.45), scale(1, 1), left top);
 @include zoom-in-animation('right', scale(0.45, 0.45), scale(1, 1), right top);
+// 渐变
+@include fade-animation(0, 1);

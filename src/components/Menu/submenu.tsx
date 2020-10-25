@@ -191,6 +191,25 @@ const Submenu: FC<ISubmenuProps> = (props) => {
     parentIndex: [...submenuContext.parentIndex, index] as Array<string>
   };
 
+  const onEntering = (el: HTMLElement) => {
+    const { height } = el.getBoundingClientRect();
+    el.style.height = '0';
+    el.getBoundingClientRect();
+    el.style.height = `${height}px`;
+  };
+  const onEntered = (el: HTMLElement) => {
+    el.style.height = 'auto';
+  };
+  const onExiting = (el: HTMLElement) => {
+    const { height } = el.getBoundingClientRect();
+    el.style.height = `${height}px`;
+    el.getBoundingClientRect();
+    el.style.height = '0';
+  };
+  const onExited = (el: HTMLElement) => {
+    el.style.height = 'auto';
+  };
+
   return (
     <li
       className={classes}
@@ -205,15 +224,30 @@ const Submenu: FC<ISubmenuProps> = (props) => {
       </div>
       {/* 这个 context 传递 parentIndex */}
       <SubmenuContext.Provider value={passedContext}>
-        <Transition
-          in={isOpen}
-          animation="zoom-in-top"
-          timeout={300}
-          appear
-          unmountOnExit
-        >
-          <ul className={popperClasses}>{childComponenets}</ul>
-        </Transition>
+        {menuContext.vertical ? (
+          <Transition
+            in={isOpen}
+            timeout={300}
+            onEntering={onEntering}
+            onEntered={onEntered}
+            onExiting={onExiting}
+            onExited={onExited}
+            appear
+            unmountOnExit
+          >
+            <ul className={popperClasses}>{childComponenets}</ul>
+          </Transition>
+        ) : (
+          <Transition
+            in={isOpen}
+            animation="zoom-in-top"
+            timeout={300}
+            appear
+            unmountOnExit
+          >
+            <ul className={popperClasses}>{childComponenets}</ul>
+          </Transition>
+        )}
       </SubmenuContext.Provider>
     </li>
   );
