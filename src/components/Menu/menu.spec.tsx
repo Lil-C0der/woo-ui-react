@@ -120,7 +120,6 @@ describe('包含 Submenu 的 Menu 组件', () => {
   it('点击页面其他地方可以关闭 popper，触发 onClose 回调', () => {
     cleanup();
     jest.useFakeTimers();
-
     const { getByText, container } = render(
       <Menu {...testClickOutsideProps}>
         <MenuItem>test item 0</MenuItem>
@@ -130,14 +129,12 @@ describe('包含 Submenu 的 Menu 组件', () => {
         </Submenu>
       </Menu>
     );
-
     const submenuEl = getByText('submenu');
     // 打开 popper
     fireEvent.click(submenuEl);
     let listEl = container.querySelector('.woo-submenu-popper');
     expect(testClickOutsideProps.onOpen).toHaveBeenCalledWith('submenu_test');
     expect(listEl).toBeVisible();
-
     act(
       () =>
         new Promise((resolve) => {
@@ -157,7 +154,6 @@ describe('包含 Submenu 的 Menu 组件', () => {
   it('可以设置 trigger', async () => {
     cleanup();
     jest.useFakeTimers();
-
     const { getByText, container } = render(
       <Menu {...testTriggerProps}>
         <MenuItem>test item 0</MenuItem>
@@ -192,8 +188,6 @@ describe('包含 Submenu 的 Menu 组件', () => {
       expect(testClickOutsideProps.onClose).toBeCalledWith('submenu_test');
       expect(listEl).toEqual(null);
     });
-
-    jest.useRealTimers();
   });
 
   it('可以设置 openSubmenus 属性', () => {
