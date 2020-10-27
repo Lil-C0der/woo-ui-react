@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
+import React, { FC, useState } from 'react';
 import Icon from '../Icon/icon';
 import Transition from '../Transition/transition';
 import classNames from 'classnames';
