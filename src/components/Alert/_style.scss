@@ -1,0 +1,38 @@
+@import '../../styles/var';
+
+.woo-alert {
+  position: relative;
+  overflow: hidden;
+  line-height: 1.5;
+  background-color: $blue;
+  margin: 0;
+  padding: 1em 1em;
+  color: $color-white;
+  border-radius: $border-radius;
+  border: 1px solid darken($blue, 15%);
+  transition: all 0.3s;
+  &-title {
+    position: relative;
+    display: block;
+    font-size: 16px;
+    &-bold {
+      font-weight: 700;
+    }
+  }
+  &-description {
+    font-size: $font-size;
+  }
+  &-close {
+    position: absolute;
+    right: 1.5em;
+    top: 1em;
+    cursor: pointer;
+  }
+}
+
+@each $theme, $color in $theme-colors {
+  .woo-alert-#{$theme} {
+    background: #{$color};
+    border: 1px solid darken($color, 15%);
+  }
+}

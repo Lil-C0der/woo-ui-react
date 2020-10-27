@@ -1,48 +1,32 @@
-import React, { useState } from 'react';
-import Button from './components/Button/button';
+import React from 'react';
+import Alert from './components/Alert/alert';
 import Menu from './components/Menu/menu';
 import MenuItem from './components/Menu/menuItem';
 import Submenu from './components/Menu/submenu';
-import Transition from './components/Transition/transition';
-
 import Icon from './components/Icon/icon';
 
 function App() {
-  const [showText, setShowText] = useState(false);
   return (
     <div className="App" style={{ padding: 10 }}>
       {/* <Icon icon="angle-down" theme="light" size="10x" /> */}
-      {/* <Icon icon="cheese" theme="dark" size="10x" /> */}
+      {/* <Icon icon="times" theme="dark" size="10x" /> */}
 
-      <Button href="https://www.baidu.com">link</Button>
-
-      <Button
-        size="lg"
-        onClick={() => {
-          setShowText(!showText);
+      <Alert
+        title="default alert"
+        closable={true}
+        onClose={() => {
+          console.log('closing');
         }}
-      >
-        Toggle
-      </Button>
-      <div style={{ width: 200, height: 200 }}>
-        <Transition in={showText} timeout={300} animation="zoom-in-left">
-          <div>
-            <p>TEXT</p>
-            <p>TEXT</p>
-            <p>TEXT</p>
-          </div>
-        </Transition>
-        <Transition
-          in={showText}
-          timeout={300}
-          animation="zoom-in-bottom"
-          wrapper
-        >
-          <Button size="lg" btnType="primary">
-            BIG Button
-          </Button>
-        </Transition>
-      </div>
+        afterClosing={() => {
+          console.log('closed');
+        }}
+      />
+
+      <Alert title="success alert" type="success" />
+      <Alert title="warning alert" type="warn" />
+      <Alert title="danger alert" type="danger" />
+
+      <Alert title="ALERT">it is an alert</Alert>
 
       <Menu
         // selectedIndex="item_3"
@@ -75,7 +59,7 @@ function App() {
         <Submenu title="submenu">
           <MenuItem>menu item 6</MenuItem>
           <MenuItem disabled>menu item 7</MenuItem>
-          <Submenu title="submenu">
+          <Submenu title="another submenu">
             <MenuItem>menu item 8</MenuItem>
             <MenuItem>menu item 9</MenuItem>
           </Submenu>
@@ -106,9 +90,6 @@ function App() {
       >
         <MenuItem>menu item 1</MenuItem>
         <MenuItem disabled>menu item 2</MenuItem>
-        <MenuItem>menu item 3</MenuItem>
-        <MenuItem>menu item 4</MenuItem>
-        <MenuItem>menu item 5</MenuItem>
 
         <Submenu title="submenu">
           <MenuItem>menu item 6</MenuItem>
@@ -118,6 +99,9 @@ function App() {
             <MenuItem>menu item 9</MenuItem>
           </Submenu>
         </Submenu>
+        <MenuItem>menu item 3</MenuItem>
+        <MenuItem>menu item 4</MenuItem>
+        <MenuItem>menu item 5</MenuItem>
       </Menu>
     </div>
   );

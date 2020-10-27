@@ -19,7 +19,6 @@ interface IIconProps extends FontAwesomeIconProps {
 const Icon: FC<IIconProps> = (props) => {
   // restProps 包括 FontAwesomeIcon 自带的属性，icon size 等
   const { className, theme, ...restProps } = props;
-  // console.log(icon);
 
   const classes = classNames('woo-icon', className, {
     [`woo-icon-${theme}`]: theme
