@@ -8,21 +8,21 @@ type AlertType = 'success' | 'danger' | 'warn';
 export interface IAlertProps {
   title: string;
   closable?: boolean;
-  children?: string;
+  description?: string;
   type?: AlertType;
   onClose?: (e: React.MouseEvent) => void;
   afterClosing?: () => void;
 }
 
 const Alert: FC<IAlertProps> = (props) => {
-  const { type, closable, onClose, afterClosing } = props;
+  const { title, description, type, closable, onClose, afterClosing } = props;
   const [visible, setVisible] = useState(true);
 
   const classes = classNames('woo-alert', {
     [`woo-alert-${type}`]: type
   });
   const titleClasses = classNames('woo-alert-title', {
-    'woo-alert-title-bold': props.children
+    'woo-alert-title-bold': description
   });
 
   const onExiting = (el: HTMLElement) => {
@@ -48,8 +48,8 @@ const Alert: FC<IAlertProps> = (props) => {
       unmountOnExit
     >
       <div className={classes}>
-        <span className={titleClasses}>{props.title}</span>
-        <span className="woo-alert-description">{props.children}</span>
+        <span className={titleClasses}>{title}</span>
+        <span className="woo-alert-description">{description}</span>
         {closable ? (
           <Icon
             icon="times"

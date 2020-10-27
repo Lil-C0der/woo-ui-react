@@ -26,7 +26,7 @@ function App() {
       <Alert title="warning alert" type="warn" />
       <Alert title="danger alert" type="danger" />
 
-      <Alert title="ALERT">it is an alert</Alert>
+      <Alert title="ALERT" description="it is an alert" />
 
       <Menu
         // selectedIndex="item_3"
