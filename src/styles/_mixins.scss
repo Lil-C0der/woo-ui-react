@@ -17,14 +17,12 @@
 ) {
   background-color: $bg;
   color: $color;
-  border: 1px solid $border-color;
+  border: 1px solid darken($bg, 15%);
   &:hover {
     background-color: $bg-hover;
-    border-color: $border-color-hover;
   }
   &:active {
     color: $color-active;
-    background-color: $bg-active;
   }
 }
 
