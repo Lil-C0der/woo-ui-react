@@ -1,11 +1,21 @@
 import React from 'react';
 import Alert from './components/Alert/alert';
-import Menu from './components/Menu/menu';
+import Menu, { IMenuProps } from './components/Menu/menu';
 import MenuItem from './components/Menu/menuItem';
 import Submenu from './components/Menu/submenu';
 import Icon from './components/Icon/icon';
 
 function App() {
+  const testTriggerProps: IMenuProps = {
+    trigger: 'hover',
+    onOpen: (e) => {
+      console.log('open', e);
+    },
+    onClose: (e) => {
+      console.log('close', e);
+    }
+  };
+
   return (
     <div className="App" style={{ padding: 10 }}>
       {/* <Icon icon="angle-down" theme="light" size="10x" /> */}
@@ -65,7 +75,7 @@ function App() {
           </Submenu>
         </Submenu>
       </Menu>
-
+      {/* 
       <Menu
         // selectedIndex="item_3"
         // selectedIndex="item_5_1"
@@ -102,6 +112,14 @@ function App() {
         <MenuItem>menu item 3</MenuItem>
         <MenuItem>menu item 4</MenuItem>
         <MenuItem>menu item 5</MenuItem>
+      </Menu> */}
+
+      <Menu {...testTriggerProps}>
+        <MenuItem>test item 0</MenuItem>
+        <Submenu title="submenu" index="submenu_test">
+          <MenuItem>test item 1</MenuItem>
+          <MenuItem>test item 2</MenuItem>
+        </Submenu>
       </Menu>
     </div>
   );
