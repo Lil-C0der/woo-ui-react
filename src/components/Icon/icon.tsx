@@ -12,7 +12,7 @@ library.add(fas);
 type iconTheme = 'primary' | 'success' | 'warn' | 'danger' | 'light' | 'dark';
 
 // 组件的 props 类型继承自 FontAwesomeIcon 定义的类型
-interface IIconProps extends FontAwesomeIconProps {
+export interface IIconProps extends FontAwesomeIconProps {
   theme?: iconTheme;
 }
 

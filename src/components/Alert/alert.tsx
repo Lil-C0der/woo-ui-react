@@ -49,12 +49,6 @@ const Alert: FC<IAlertProps> = (props) => {
     afterClosing && afterClosing();
   };
 
-  const closeEl = closeText ? (
-    closeText
-  ) : (
-    <Icon icon="times" className="woo-alert-close-icon" />
-  );
-
   return (
     <Transition
       animation="fade"
@@ -77,7 +71,11 @@ const Alert: FC<IAlertProps> = (props) => {
               onClose && onClose(e);
             }}
           >
-            {closeEl}
+            {closeText ? (
+              closeText
+            ) : (
+              <Icon icon="times" className="woo-alert-close-icon" />
+            )}
           </span>
         )}
       </div>

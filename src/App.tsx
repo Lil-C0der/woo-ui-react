@@ -9,7 +9,7 @@ function App() {
   const testCloseTextProps = {
     title: 'alert_test',
     closable: true,
-    closeText: 'test closeText'
+    closeText: <span style={{ color: '#f00' }}>close</span>
   };
 
   return (
