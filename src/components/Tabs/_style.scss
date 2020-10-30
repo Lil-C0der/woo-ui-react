@@ -1,0 +1,41 @@
+.woo-tabs {
+  color: $grey;
+}
+.woo-tabs-head {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 40px;
+  border-bottom: 1px solid #dedde2;
+  position: relative;
+  .woo-tabs-item {
+    display: flex;
+    padding: 0 2em;
+    margin-right: 1em;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: -1px;
+    font-size: 16px;
+    cursor: pointer;
+    &:hover {
+      color: $tab-active-color;
+    }
+    &-active {
+      color: $tab-active-color;
+      font-weight: 700;
+    }
+    &-disabled {
+      color: $disabled-color;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.woo-tabs-pane {
+  display: none;
+
+  &-active {
+    display: block;
+  }
+}
