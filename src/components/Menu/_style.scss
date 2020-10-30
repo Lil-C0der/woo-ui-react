@@ -17,7 +17,7 @@
     }
     &-active {
       color: $active-menu-item-color;
-      font-weight: 700;
+      font-weight: 500;
       &::after {
         content: '';
         display: block;
@@ -99,7 +99,7 @@
 .has-active-item {
   > .woo-submenu-title {
     color: $active-menu-item-color;
-    font-weight: 700;
+    font-weight: 500;
     &::after {
       content: '';
       display: block;
