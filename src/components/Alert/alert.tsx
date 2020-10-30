@@ -1,24 +1,37 @@
-import React, { FC, useState } from 'react';
+import React, { CSSProperties, FC, ReactNode, useState } from 'react';
 import Icon from '../Icon/icon';
 import Transition from '../Transition/transition';
 import classNames from 'classnames';
 
-type AlertType = 'success' | 'danger' | 'warn';
+type AlertType = 'primary' | 'success' | 'danger' | 'warn';
 
 export interface IAlertProps {
   title: string;
   closable?: boolean;
   description?: string;
   type?: AlertType;
+  closeText?: ReactNode;
+  className?: string;
+  style?: CSSProperties;
   onClose?: (e: React.MouseEvent) => void;
   afterClosing?: () => void;
 }
 
 const Alert: FC<IAlertProps> = (props) => {
-  const { title, description, type, closable, onClose, afterClosing } = props;
+  const {
+    title,
+    description,
+    type,
+    closable,
+    closeText,
+    style,
+    className,
+    onClose,
+    afterClosing
+  } = props;
   const [visible, setVisible] = useState(true);
 
-  const classes = classNames('woo-alert', {
+  const classes = classNames('woo-alert', className, {
     [`woo-alert-${type}`]: type
   });
   const titleClasses = classNames('woo-alert-title', {
@@ -36,6 +49,12 @@ const Alert: FC<IAlertProps> = (props) => {
     afterClosing && afterClosing();
   };
 
+  const closeEl = closeText ? (
+    closeText
+  ) : (
+    <Icon icon="times" className="woo-alert-close-icon" />
+  );
+
   return (
     <Transition
       animation="fade"
@@ -47,20 +66,19 @@ const Alert: FC<IAlertProps> = (props) => {
       wrapper
       unmountOnExit
     >
-      <div className={classes}>
+      <div style={style} className={classes}>
         <span className={titleClasses}>{title}</span>
         <span className="woo-alert-description">{description}</span>
-        {closable ? (
-          <Icon
-            icon="times"
+        {closable && (
+          <span
             className="woo-alert-close"
             onClick={(e) => {
               setVisible(false);
               onClose && onClose(e);
             }}
-          />
-        ) : (
-          ''
+          >
+            {closeEl}
+          </span>
         )}
       </div>
     </Transition>
@@ -68,6 +86,7 @@ const Alert: FC<IAlertProps> = (props) => {
 };
 
 Alert.defaultProps = {
+  type: 'primary',
   closable: false
 };
 

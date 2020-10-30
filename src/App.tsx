@@ -6,20 +6,17 @@ import Submenu from './components/Menu/submenu';
 import Icon from './components/Icon/icon';
 
 function App() {
-  const testTriggerProps: IMenuProps = {
-    trigger: 'hover',
-    onOpen: (e) => {
-      console.log('open', e);
-    },
-    onClose: (e) => {
-      console.log('close', e);
-    }
+  const testCloseTextProps = {
+    title: 'alert_test',
+    closable: true,
+    closeText: 'test closeText'
   };
 
   return (
     <div className="App" style={{ padding: 10 }}>
       {/* <Icon icon="angle-down" theme="light" size="10x" /> */}
-      {/* <Icon icon="times" theme="dark" size="10x" /> */}
+      <Icon icon="arrow-alt-circle-down" theme="dark" size="2x" />
+      <Icon icon="apple-alt" theme="dark" size="2x" />
 
       <Alert
         title="default alert"
@@ -36,7 +33,13 @@ function App() {
       <Alert title="warning alert" type="warn" />
       <Alert title="danger alert" type="danger" />
 
-      <Alert title="ALERT" description="it is an alert" />
+      <Alert {...testCloseTextProps} />
+
+      <Alert
+        style={{ width: 200 }}
+        title="ALERT"
+        description="it is an alert"
+      />
 
       <Menu
         // selectedIndex="item_3"
@@ -113,14 +116,6 @@ function App() {
         <MenuItem>menu item 4</MenuItem>
         <MenuItem>menu item 5</MenuItem>
       </Menu> */}
-
-      <Menu {...testTriggerProps}>
-        <MenuItem>test item 0</MenuItem>
-        <Submenu title="submenu" index="submenu_test">
-          <MenuItem>test item 1</MenuItem>
-          <MenuItem>test item 2</MenuItem>
-        </Submenu>
-      </Menu>
     </div>
   );
 }
