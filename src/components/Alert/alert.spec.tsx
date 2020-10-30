@@ -19,6 +19,19 @@ const testClosableProps: IAlertProps = {
   onClose: jest.fn(),
   afterClosing: jest.fn()
 };
+const testCloseTextProps: IAlertProps = {
+  title: 'alert_test',
+  closable: true,
+  closeText: 'test closeText',
+  onClose: jest.fn(),
+  afterClosing: jest.fn()
+};
+const testCloseTextJSXElProps: IAlertProps = {
+  title: 'alert_test',
+  closable: true,
+  closeText: <h2 style={{ color: '#f00' }}>close Element</h2>
+};
+
 describe('Button 组件', () => {
   it('存在', () => {
     expect(Alert).toBeTruthy();
@@ -26,9 +39,9 @@ describe('Button 组件', () => {
   it('可以设置 title 属性，默认不显示关闭按钮', () => {
     const { container } = render(<Alert {...defaultProps} />);
     const titleEl = container.querySelector('.woo-alert-title');
-    const closeIconEl = container.querySelector('svg');
+    const closeEl = container.querySelector('.woo-alert-close');
     expect(titleEl?.innerHTML).toEqual('alert_test');
-    expect(closeIconEl).toEqual(null);
+    expect(closeEl).toEqual(null);
   });
   it('可以设置 type 属性', () => {
     const { container } = render(<Alert {...testTypeProps} />);
@@ -43,19 +56,42 @@ describe('Button 组件', () => {
   it('可以设置 closable 属性，并且点击会触发 onClose 回调，同时 alert 消失', () => {
     jest.useFakeTimers();
     const { container } = render(<Alert {...testClosableProps} />);
-    let closeIconEl = container.querySelector('svg');
-    expect(closeIconEl).toBeVisible();
+    const closeEl = container.querySelector('.woo-alert-close');
+    expect(closeEl).toBeVisible();
     act(() => {
-      closeIconEl && fireEvent.click(closeIconEl);
+      closeEl && fireEvent.click(closeEl);
       expect(testClosableProps.onClose).toHaveBeenCalledWith(
         expect.any(Object)
       );
       expect(testClosableProps.afterClosing).not.toHaveBeenCalled();
       jest.advanceTimersByTime(500);
     });
-    closeIconEl = container.querySelector('svg');
-    expect(closeIconEl).toEqual(null);
+    expect(container.querySelector('.woo-alert')).toEqual(null);
     expect(testClosableProps.afterClosing).toHaveBeenCalled();
     jest.runAllTimers();
+  });
+  it('支持自定义 close 按钮的文本，点击以后触发 onClose 回调', () => {
+    jest.useFakeTimers();
+    const { getByText, container } = render(<Alert {...testCloseTextProps} />);
+    const closeEl = getByText('test closeText');
+    expect(closeEl).toBeVisible();
+    expect(closeEl).toHaveClass('woo-alert-close');
+    act(() => {
+      fireEvent.click(closeEl);
+      expect(testCloseTextProps.onClose).toHaveBeenCalledWith(
+        expect.any(Object)
+      );
+      expect(testCloseTextProps.afterClosing).not.toHaveBeenCalled();
+      jest.advanceTimersByTime(500);
+    });
+    expect(container.querySelector('.woo-alert')).toEqual(null);
+    expect(testCloseTextProps.afterClosing).toHaveBeenCalled();
+    jest.runAllTimers();
+    jest.useFakeTimers();
+  });
+  it('closeText 属性可以设置 jsx 元素', () => {
+    const { getByText } = render(<Alert {...testCloseTextJSXElProps} />);
+    expect(getByText('close Element')).toEqual(expect.any(HTMLHeadingElement));
+    expect(getByText('close Element')).toHaveStyle('color: #f00');
   });
 });
