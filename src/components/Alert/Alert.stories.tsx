@@ -112,6 +112,18 @@ alertType.parameters = {
     }
   }
 };
+
+export const AlertWithDescription = () => (
+  <Alert title="Title" description="description" />
+);
+AlertWithDescription.parameters = {
+  docs: {
+    description: {
+      story: '通过 `description` 属性给 Alert 添加描述'
+    }
+  }
+};
+
 export const customizeCloseText = () => (
   <Alert
     title="自定义关闭按钮"
