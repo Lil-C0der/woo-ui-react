@@ -23,10 +23,15 @@
     font-size: $font-size;
   }
   &-close {
+    display: block;
     position: absolute;
     right: 1.5em;
     top: 1em;
+    line-height: 1;
     cursor: pointer;
+    &:hover {
+      color: $grey;
+    }
   }
 }
 
