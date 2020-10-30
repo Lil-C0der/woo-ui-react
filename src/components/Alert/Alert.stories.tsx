@@ -85,6 +85,33 @@ BasicAlert.args = {
   type: 'primary'
 };
 
+export const alertType = () => (
+  <>
+    <Alert style={{ marginBottom: 10 }} title="it is a default message" />
+    <Alert
+      style={{ marginBottom: 10 }}
+      title="it is a success message"
+      type="success"
+    />
+    <Alert
+      style={{ marginBottom: 10 }}
+      title="it is a warning message"
+      type="warn"
+    />
+    <Alert
+      style={{ marginBottom: 10 }}
+      title="it is a danger message"
+      type="danger"
+    />
+  </>
+);
+alertType.parameters = {
+  docs: {
+    description: {
+      story: '设置 `type` 属性来改变 alert 的类型'
+    }
+  }
+};
 export const customizeCloseText = () => (
   <Alert
     title="自定义关闭按钮"
