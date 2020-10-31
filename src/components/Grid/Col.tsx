@@ -1,19 +1,19 @@
 import React, { CSSProperties, FC } from 'react';
 import classNames from 'classnames';
 
-interface ResponsiveObj {
+interface ResponsiveLayoutObj {
   span?: number | string;
   offset?: number | string;
 }
 export interface IColProps {
   span?: number | string;
   offset?: number | string;
-  xs?: ResponsiveObj;
-  sm?: ResponsiveObj;
-  md?: ResponsiveObj;
-  lg?: ResponsiveObj;
-  xl?: ResponsiveObj;
-  xxl?: ResponsiveObj;
+  xs?: ResponsiveLayoutObj;
+  sm?: ResponsiveLayoutObj;
+  md?: ResponsiveLayoutObj;
+  lg?: ResponsiveLayoutObj;
+  xl?: ResponsiveLayoutObj;
+  xxl?: ResponsiveLayoutObj;
   style?: CSSProperties;
   className?: string;
 }
@@ -33,7 +33,10 @@ const Col: FC<IColProps> = (props) => {
     style
   } = props;
 
-  const createClass = (obj: ResponsiveObj | undefined, prefix: string) => {
+  const createClass = (
+    obj: ResponsiveLayoutObj | undefined,
+    prefix: string
+  ) => {
     let arr = [];
     obj?.span && arr.push(`woo-col-${prefix}${obj?.span}`);
     obj?.offset && arr.push(`woo-col-${prefix}offset-${obj?.offset}`);

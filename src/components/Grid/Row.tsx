@@ -45,6 +45,6 @@ const Row: FC<IRowProps> = (props) => {
 };
 
 Row.defaultProps = {
-  align: 'center'
+  align: 'left'
 };
 export default Row;
