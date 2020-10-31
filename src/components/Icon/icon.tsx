@@ -20,7 +20,7 @@ const Icon: FC<IIconProps> = (props) => {
   // restProps 包括 FontAwesomeIcon 自带的属性，icon size 等
   const { className, theme, ...restProps } = props;
 
-  const classes = classNames('woo-icon', className, {
+  const classes = classNames('woo-icon', `woo-icon-${props.icon}`, className, {
     [`woo-icon-${theme}`]: theme
   });
   return <FontAwesomeIcon className={classes} {...restProps} />;
