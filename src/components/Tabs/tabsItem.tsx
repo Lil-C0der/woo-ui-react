@@ -1,8 +1,8 @@
-import React, { CSSProperties, FC } from 'react';
+import React, { CSSProperties, FC, ReactNode } from 'react';
 import classNames from 'classnames';
 
 export interface ITabsItemProps {
-  name: string;
+  name: ReactNode;
   index: string;
   disabled?: boolean;
   isActive?: boolean;
@@ -11,10 +11,9 @@ export interface ITabsItemProps {
 }
 
 const TabsItem: FC<ITabsItemProps> = (props) => {
-  const { name, index, disabled, isActive, children, style, className } = props;
+  const { index, isActive, children, style, className } = props;
 
   const classes = classNames('woo-tabs-pane', className, {
-    // 'woo-tabs-item-disabled': disabled,
     'woo-tabs-pane-active': isActive
   });
   return (

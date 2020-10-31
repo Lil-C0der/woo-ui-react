@@ -29,7 +29,15 @@ function App() {
         <TabsItem name="tab_2" index="item_2" disabled>
           content 2
         </TabsItem>
-        <TabsItem name="tab_3" index="item_3">
+        <TabsItem
+          name={
+            <>
+              <Icon icon="exclamation-circle" />
+              自定义图标
+            </>
+          }
+          index="item_3"
+        >
           content 3
         </TabsItem>
         {/* {[0, 1, 2, 3].map((el, index) => (

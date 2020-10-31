@@ -2,6 +2,7 @@ import React, {
   CSSProperties,
   FC,
   FunctionComponentElement,
+  ReactNode,
   useState
 } from 'react';
 
@@ -16,7 +17,7 @@ export interface ITabsProps {
   className?: string;
   onTabClick?: (
     itemIndex: string,
-    itemName: string,
+    itemName: ReactNode,
     e: React.MouseEvent
   ) => void;
   onChange?: (lastActiveIndex: string, currActiveIndex: string) => void;
@@ -34,7 +35,7 @@ const Tabs: FC<ITabsProps> = (props) => {
 
   const [currActiveIdx, setCurrActiveIdx] = useState(activeIndex);
 
-  const onItemClick = (index: string, name: string, e: React.MouseEvent) => {
+  const onItemClick = (index: string, name: ReactNode, e: React.MouseEvent) => {
     onTabClick && onTabClick(index, name, e);
     if (index !== currActiveIdx) {
       // currActiveIndex 为 activeIndex 或者第一个 item 的 index，所以用类型断言
@@ -45,7 +46,7 @@ const Tabs: FC<ITabsProps> = (props) => {
 
   const renderTabsHead = () => {
     return React.Children.map(children, (child, i) => {
-      let childEl = child as childrenComponent;
+      const childEl = child as childrenComponent;
       const { index, disabled, name } = childEl.props;
       const { displayName } = childEl.type;
 
@@ -58,7 +59,7 @@ const Tabs: FC<ITabsProps> = (props) => {
           'woo-tabs-item-disabled': disabled,
           'woo-tabs-item-active': isActive
         });
-        let el = (
+        const el = (
           <li
             key={index}
             className={itemClasses}
