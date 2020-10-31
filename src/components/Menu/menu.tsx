@@ -32,7 +32,7 @@ export interface IMenuProps {
 }
 
 // 子组件实例类型
-export type childrenComponenet = FunctionComponentElement<
+export type childComponent = FunctionComponentElement<
   ISubmenuProps | IMenuItemProps
 >;
 
@@ -126,7 +126,7 @@ const Menu: FC<IMenuProps> = (props) => {
     let otherElCount = 0;
 
     return React.Children.map(children, (child, i) => {
-      let childEl = child as childrenComponenet;
+      let childEl = child as childComponent;
       const { index } = childEl.props;
       const { displayName } = childEl.type;
 

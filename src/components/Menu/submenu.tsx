@@ -172,7 +172,7 @@ const Submenu: FC<ISubmenuProps> = (props) => {
     });
   };
   // 需要被渲染的子组件
-  const childComponenets = renderChildren();
+  const childComponents = renderChildren();
 
   // submenu wrapper 的 className
   const classes = classNames('woo-submenu', className, {
@@ -235,7 +235,7 @@ const Submenu: FC<ISubmenuProps> = (props) => {
             appear
             unmountOnExit
           >
-            <ul className={popperClasses}>{childComponenets}</ul>
+            <ul className={popperClasses}>{childComponents}</ul>
           </Transition>
         ) : (
           <Transition
@@ -245,7 +245,7 @@ const Submenu: FC<ISubmenuProps> = (props) => {
             appear
             unmountOnExit
           >
-            <ul className={popperClasses}>{childComponenets}</ul>
+            <ul className={popperClasses}>{childComponents}</ul>
           </Transition>
         )}
       </SubmenuContext.Provider>
