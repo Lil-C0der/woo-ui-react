@@ -2,11 +2,11 @@ import React, { CSSProperties, FC } from 'react';
 import classNames from 'classnames';
 
 interface ResponsiveObj {
-  span: number | string;
+  span?: number | string;
   offset?: number | string;
 }
 export interface IColProps {
-  span: number | string;
+  span?: number | string;
   offset?: number | string;
   xs?: ResponsiveObj;
   sm?: ResponsiveObj;

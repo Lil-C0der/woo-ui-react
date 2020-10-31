@@ -5,13 +5,13 @@ import Row from './components/Grid/Row';
 function App() {
   useEffect(() => {
     console.log(
-      window.getComputedStyle(document.querySelector('.woo-col') as Element)
-        .width
+      window.getComputedStyle(document.querySelector('.woo-row') as Element)
+        .justifyContent
     );
   }, []);
   return (
     <div className="App">
-      <Row>
+      <Row gutter="20">
         <Col span={12}>
           <div className="grid-content bg-dark">test col</div>
         </Col>
@@ -19,6 +19,7 @@ function App() {
           <div className="grid-content bg-dark">test col2</div>
         </Col>
       </Row>
+
       {/* <Row gutter="20">
         <Col span="6" offset="6">
           <div className="grid-content bg-light">6</div>
