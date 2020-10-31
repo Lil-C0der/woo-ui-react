@@ -82,9 +82,9 @@ describe('Grid 布局系统', () => {
           <Col span={12}>test col 2</Col>
         </Row>
       );
-    it('默认的 align 属性是 center', () => {
+    it('默认的 align 属性是 left', () => {
       const { container } = renderGrid({});
-      expect(container.querySelector('.woo-row')).toHaveClass('align-center');
+      expect(container.querySelector('.woo-row')).toHaveClass('align-left');
       // TODO 测试 CSS 属性
     });
     it('可以设置 align 属性', () => {
