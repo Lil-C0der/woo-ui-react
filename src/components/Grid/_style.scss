@@ -1,0 +1,125 @@
+.woo-col {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+
+  $class-prefix: 'woo-col-';
+  @for $n from 1 through 24 {
+    &.#{$class-prefix}#{$n} {
+      width: ($n / 24) * 100%;
+    }
+  }
+  $class-prefix: 'woo-col-offset-';
+  @for $n from 1 through 24 {
+    &.#{$class-prefix}#{$n} {
+      margin-left: ($n / 24) * 100%;
+    }
+  }
+  // 响应式
+  // 超小屏幕 例如手机竖屏
+  @media (max-width: 575px) {
+    $class-prefix: 'woo-col-xs-';
+    @for $n from 1 through 24 {
+      &.#{$class-prefix}#{$n} {
+        width: ($n / 24) * 100%;
+      }
+    }
+    $class-prefix: 'woo-col-xs-offset-';
+    @for $n from 1 through 24 {
+      &.#{$class-prefix}#{$n} {
+        margin-left: ($n / 24) * 100%;
+      }
+    }
+  }
+  // 小屏幕 如手机横屏
+  @media (min-width: 576px) {
+    $class-prefix: 'woo-col-sm-';
+    @for $n from 1 through 24 {
+      &.#{$class-prefix}#{$n} {
+        width: ($n / 24) * 100%;
+      }
+    }
+    $class-prefix: 'woo-col-sm-offset-';
+    @for $n from 1 through 24 {
+      &.#{$class-prefix}#{$n} {
+        margin-left: ($n / 24) * 100%;
+      }
+    }
+  }
+  // 中等屏幕 平板电脑
+  @media (min-width: 768px) {
+    $class-prefix: 'woo-col-md-';
+    @for $n from 1 through 24 {
+      &.#{$class-prefix}#{$n} {
+        width: ($n / 24) * 100%;
+      }
+    }
+    $class-prefix: 'woo-col-md-offset-';
+    @for $n from 1 through 24 {
+      &.#{$class-prefix}#{$n} {
+        margin-left: ($n / 24) * 100%;
+      }
+    }
+  }
+  // 大屏 桌面显示器
+  @media (min-width: 992px) {
+    $class-prefix: 'woo-col-lg-';
+    @for $n from 1 through 24 {
+      &.#{$class-prefix}#{$n} {
+        width: ($n / 24) * 100%;
+      }
+    }
+    $class-prefix: 'woo-col-lg-offset-';
+    @for $n from 1 through 24 {
+      &.#{$class-prefix}#{$n} {
+        margin-left: ($n / 24) * 100%;
+      }
+    }
+  }
+  // 超大屏 大屏显示器
+  @media (min-width: 1200px) {
+    $class-prefix: 'woo-col-xl-';
+    @for $n from 1 through 24 {
+      &.#{$class-prefix}#{$n} {
+        width: ($n / 24) * 100%;
+      }
+    }
+    $class-prefix: 'woo-col-xl-offset-';
+    @for $n from 1 through 24 {
+      &.#{$class-prefix}#{$n} {
+        margin-left: ($n / 24) * 100%;
+      }
+    }
+  }
+  // 宽屏
+  @media (min-width: 1600) {
+    $class-prefix: 'woo-col-xxl-';
+    @for $n from 1 through 24 {
+      &.#{$class-prefix}#{$n} {
+        width: ($n / 24) * 100%;
+      }
+    }
+    $class-prefix: 'woo-col-xxl-offset-';
+    @for $n from 1 through 24 {
+      &.#{$class-prefix}#{$n} {
+        margin-left: ($n / 24) * 100%;
+      }
+    }
+  }
+}
+
+.woo-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  &.align-left {
+    justify-content: flex-start;
+  }
+  &.align-right {
+    justify-content: flex-end;
+  }
+  &.align-center {
+    justify-content: center;
+  }
+}
