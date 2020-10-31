@@ -18,7 +18,7 @@ export default {
     docs: {
       description: {
         component:
-          '#### 选项卡切换组件\n 通过 `activeIndex` 属性可以设置默认展示的标签页，如果不设置 `activeIndex` 属性则默认展示第一个标签页的内容。\n\nTabs 的子组件 TabsItem 必须通过 `index` 属性设置**唯一**的索引，通过 `name` 属性来设置顶部标签选项卡的文本，`children` 属性为标签页的内容。\n\n通过 TabsItem 组件的 `disabled` 属性可以禁用某一个标签。'
+          '#### 选项卡切换组件\n 通过 `activeIndex` 属性可以设置默认展示的标签页，如果不设置 `activeIndex` 属性则默认展示第一个标签页的内容。\n\nTabs 的子组件 `TabsItem` 必须通过 `index` 属性设置**唯一**的索引，通过 `name` 属性来设置顶部标签选项卡的文本，`children` 属性为标签页的内容。\n\n通过 `TabsItem` 组件的 `disabled` 属性可以禁用某一个标签。'
       }
     }
   },
@@ -79,7 +79,7 @@ BasicTabs.args = {
   }
 };
 
-export const customizeTabsItemName = () => (
+export const CustomizeTabsItemName = () => (
   <Tabs>
     {renderTabsItem([
       {
@@ -110,10 +110,11 @@ export const customizeTabsItemName = () => (
     ])}
   </Tabs>
 );
-customizeTabsItemName.parameters = {
+CustomizeTabsItemName.parameters = {
   docs: {
     description: {
-      story: 'TabsItem 的 `name` 属性支持 JSX 元素，可以自定义选项卡的样式。'
+      story:
+        '`TabsItem` 组件的 `name` 属性支持 JSX 元素，可以自定义选项卡的样式。'
     }
   }
 };

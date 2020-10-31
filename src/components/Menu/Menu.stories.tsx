@@ -16,7 +16,7 @@ export default {
     docs: {
       description: {
         component:
-          '#### 为网站提供导航功能的菜单。\n导航菜单默认为水平模式，通过 `vertical` 属性可以使导航菜单变为垂直模式。<br /><br />在菜单中通过 `Submenu` 组件可以生成二级菜单，二级菜单的标题通过 `title` 属性来设置。可以通过 `selectedIndex` 属性来指定默认选中的 MenuItem。<br /><br />默认点击展开二级菜单，可以通过 `trigger` 属性来设置不同的激活菜单方式，可选的方式有 `click` 和 `hover`。'
+          '#### 为网站提供导航功能的菜单。\n导航菜单默认为水平模式，通过 `vertical` 属性可以使导航菜单变为垂直模式。<br /><br />在菜单中通过 `Submenu` 组件可以生成二级菜单，二级菜单的标题通过 `title` 属性来设置。可以通过 `selectedIndex` 属性来指定默认选中的 `MenuItem`。<br /><br />默认点击展开二级菜单，可以通过 `trigger` 属性来设置不同的激活菜单方式，可选的方式有 `click` 和 `hover`。'
       }
     }
   },
