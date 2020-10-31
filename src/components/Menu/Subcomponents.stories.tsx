@@ -1,22 +1,19 @@
-import React from 'react';
-import MenuItem from './menuItem';
-import Submenu from './submenu';
+import React, { PropsWithChildren } from 'react';
+import MenuItem, { IMenuItemProps } from './menuItem';
+import Submenu, { ISubmenuProps } from './submenu';
 
-export const MenuItemProps = ({
+export const MenuItemProps: (
+  props: PropsWithChildren<IMenuItemProps>
+) => JSX.Element = ({
   disabled = false,
   index = 'item_${item 的索引}',
-  children = '' as React.ReactNode
+  children
 }) => (
   <MenuItem disabled={disabled} index={index} key={index}>
     {children}
   </MenuItem>
 );
 
-interface SubmenuProps {
-  title: string;
-  index?: string;
-  children?: React.ReactNode;
-}
-export const SubmenuProps = (args: SubmenuProps) => (
+export const SubmenuProps = (args: PropsWithChildren<ISubmenuProps>) => (
   <Submenu {...args}></Submenu>
 );
