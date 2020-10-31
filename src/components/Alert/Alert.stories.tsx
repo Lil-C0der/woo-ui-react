@@ -1,6 +1,6 @@
 import React from 'react';
 import { Story, Meta } from '@storybook/react/types-6-0';
-
+import { action } from '@storybook/addon-actions';
 import Alert, { IAlertProps } from './alert';
 
 export default {
@@ -70,7 +70,8 @@ export default {
       description: '关闭动画结束后触发的回调',
       type: {
         summary: '() => void'
-      }
+      },
+      control: false
     }
   }
 } as Meta;
@@ -82,7 +83,8 @@ export const BasicAlert = Template.bind({});
 BasicAlert.args = {
   closable: true,
   title: 'it is an alert box',
-  type: 'primary'
+  type: 'primary',
+  afterClosing: action('afterClosing')
 };
 
 export const alertType = () => (
