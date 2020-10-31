@@ -3,9 +3,8 @@ import classNames from 'classnames';
 
 export interface ITabsItemProps {
   name: string;
-  index?: string;
+  index: string;
   disabled?: boolean;
-  // children?: React.ReactNode;
   isActive?: boolean;
   style?: CSSProperties;
   className?: string;
@@ -19,10 +18,9 @@ const TabsItem: FC<ITabsItemProps> = (props) => {
     'woo-tabs-pane-active': isActive
   });
   return (
-    <li style={style} data-index={index} className={classes}>
+    <div style={style} data-index={index} className={classes}>
       {children}
-      {/* {name} */}
-    </li>
+    </div>
   );
 };
 

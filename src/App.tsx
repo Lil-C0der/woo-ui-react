@@ -1,31 +1,36 @@
 import React from 'react';
-import Alert from './components/Alert/alert';
-import Menu, { IMenuProps } from './components/Menu/menu';
+import Menu from './components/Menu/menu';
 import MenuItem from './components/Menu/menuItem';
 import Submenu from './components/Menu/submenu';
 import Icon from './components/Icon/icon';
 
-import Tabs from './components/Tabs/tabs';
+import Tabs, { ITabsProps } from './components/Tabs/tabs';
 import TabsItem from './components/Tabs/tabsItem';
 
 function App() {
-  const testCloseTextProps = {
-    title: 'alert_test',
-    closable: true,
-    closeText: <span style={{ color: '#f00' }}>close</span>
+  const testTabsProps: ITabsProps = {
+    onChange: (oldIndex, curIndex) => {
+      console.log(oldIndex, curIndex);
+    },
+    onTabClick: (i, name, e) => {
+      console.log(i, name, e);
+    }
   };
-
   return (
     <div className="App" style={{ padding: 10 }}>
-      <Tabs activeIndex="item_0">
+      {/* <Tabs activeIndex="item_1"> */}
+      <Tabs {...testTabsProps}>
         <TabsItem name="tab_0" index="item_0">
           content 0
         </TabsItem>
         <TabsItem name="tab_1" index="item_1">
           content 1
         </TabsItem>
-        <TabsItem name="tab_2" index="item_2">
+        <TabsItem name="tab_2" index="item_2" disabled>
           content 2
+        </TabsItem>
+        <TabsItem name="tab_3" index="item_3">
+          content 3
         </TabsItem>
         {/* {[0, 1, 2, 3].map((el, index) => (
           <TabsItem
