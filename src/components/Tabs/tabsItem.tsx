@@ -5,24 +5,20 @@ export interface ITabsItemProps {
   name: ReactNode;
   index: string;
   disabled?: boolean;
-  isActive?: boolean;
   style?: CSSProperties;
   className?: string;
 }
 
 const TabsItem: FC<ITabsItemProps> = (props) => {
-  const { index, isActive, children, style, className } = props;
+  const { children, style, className } = props;
 
-  const classes = classNames('woo-tabs-pane', className, {
-    'woo-tabs-pane-active': isActive
-  });
+  const classes = classNames('woo-tabs-pane', className);
   return (
-    <div style={style} data-index={index} className={classes}>
+    <div style={style} className={classes}>
       {children}
     </div>
   );
 };
-
 TabsItem.defaultProps = {
   disabled: false
 };
