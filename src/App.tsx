@@ -10,10 +10,10 @@ import TabsItem from './components/Tabs/tabsItem';
 function App() {
   const testTabsProps: ITabsProps = {
     onChange: (oldIndex, curIndex) => {
-      console.log(oldIndex, curIndex);
+      console.log('change', oldIndex, curIndex);
     },
     onTabClick: (i, name, e) => {
-      console.log(i, name, e);
+      console.log('click', i, name, e);
     }
   };
   return (
