@@ -39,7 +39,7 @@ const Row: FC<IRowProps> = (props) => {
 
   return (
     <div className={classes} style={rowStyle}>
-      {gutter && renderChildren()}
+      {gutter ? renderChildren() : children}
     </div>
   );
 };
