@@ -14,4 +14,4 @@ before_script:
   - 'sudo chmod 4755 /opt/google/chrome/chrome-sandbox'
 
 script:
-  - npm run test
+  - npm run test:nowatch
