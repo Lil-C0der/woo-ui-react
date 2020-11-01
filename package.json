@@ -1,7 +1,7 @@
 {
   "name": "woo-ui-react",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "description": "Woo UI React version",
   "author": "Lil-C0der",
   "license": "MIT",
