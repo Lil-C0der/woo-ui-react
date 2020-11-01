@@ -3,7 +3,7 @@ import Tabs, { ITabsProps } from './tabs';
 import TabsItem, { ITabsItemProps } from './tabsItem';
 
 export type ITabsComponent = FC<ITabsProps> & {
-  Item?: FC<ITabsItemProps>;
+  Item: FC<ITabsItemProps>;
 };
 
 const TransTab = Tabs as ITabsComponent;
