@@ -4,7 +4,7 @@
       "target": "ES5",
       "declaration": true,
       "jsx": "react",
-      "outDir": "build",
+      "outDir": "dist",
       "moduleResolution": "Node",
       "allowSyntheticDefaultImports": true
   },
