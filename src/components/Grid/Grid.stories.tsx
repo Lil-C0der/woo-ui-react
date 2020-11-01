@@ -62,7 +62,7 @@ export default {
 
 const Template: Story = ({ gutter, align, span, offset }) => (
   <>
-    <span>不等宽的栅格</span>
+    <span className="desc">不等宽的栅格</span>
     <Row gutter={gutter} align={align}>
       <Col span={span}>
         <div className="grid-content bg-light">{span}</div>
@@ -80,7 +80,7 @@ const Template: Story = ({ gutter, align, span, offset }) => (
       </Col>
     </Row>
 
-    <span>等宽的栅格</span>
+    <span className="desc"> 等宽的栅格</span>
     <Row gutter={gutter} align={align}>
       <Col span={span}>
         <div className="grid-content bg-light">{span}</div>
