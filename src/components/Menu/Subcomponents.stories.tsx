@@ -1,6 +1,7 @@
 import React, { PropsWithChildren } from 'react';
-import MenuItem, { IMenuItemProps } from './menuItem';
-import Submenu, { ISubmenuProps } from './submenu';
+import { IMenuItemProps } from './menuItem';
+import { ISubmenuProps } from './submenu';
+import Menu from './index';
 
 export const MenuItemProps: (
   props: PropsWithChildren<IMenuItemProps>
@@ -9,11 +10,11 @@ export const MenuItemProps: (
   index = 'item_${item 的索引}',
   children
 }) => (
-  <MenuItem disabled={disabled} index={index} key={index}>
+  <Menu.Item disabled={disabled} index={index} key={index}>
     {children}
-  </MenuItem>
+  </Menu.Item>
 );
 
 export const SubmenuProps = (args: PropsWithChildren<ISubmenuProps>) => (
-  <Submenu {...args}></Submenu>
+  <Menu.Submenu {...args}></Menu.Submenu>
 );

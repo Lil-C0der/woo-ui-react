@@ -1,10 +1,11 @@
 import React from 'react';
-import TabsItem, { ITabsItemProps } from './tabsItem';
+import { ITabsItemProps } from './tabsItem';
+import Tabs from './index';
 
 export const TabsItemProps: (
   props: React.PropsWithChildren<ITabsItemProps>
 ) => JSX.Element = ({ name, index, disabled = false, children }) => (
-  <TabsItem index={index} name={name} key={index} disabled={disabled}>
+  <Tabs.Item index={index} name={name} key={index} disabled={disabled}>
     {children}
-  </TabsItem>
+  </Tabs.Item>
 );

@@ -79,8 +79,8 @@ BasicTabs.args = {
   }
 };
 
-export const CustomizeTabsItemName = () => (
-  <Tabs>
+export const CustomizeTabsItemName: Story<ITabsProps> = (args) => (
+  <Tabs {...args}>
     {renderTabsItem([
       {
         name: (
