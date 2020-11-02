@@ -15,3 +15,12 @@ before_script:
 
 script:
   - npm run test:nowatch
+  - npm run build-storybook
+
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN # Set in the settings page of your repository, as a secure variable
+  local_dir: storybook-static
+  on:
+    branch: master
