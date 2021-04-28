@@ -2,6 +2,7 @@ import React, {
   CSSProperties,
   FC,
   FunctionComponentElement,
+  useEffect,
   useRef,
   useState
 } from 'react';
@@ -29,6 +30,7 @@ export interface IMenuProps {
   onClick?: ClickCallback;
   onOpen?: OpenChangeCallback;
   onClose?: OpenChangeCallback;
+  fullyOnControl?: boolean;
 }
 
 // 子组件实例类型
@@ -82,7 +84,11 @@ const Menu: FC<IMenuProps> = (props) => {
 
   // 用 useState hook 来控制 selected-index
   const [currSelectedIdx, setSelectIdx] = useState(selectedIndex);
-  const [indexPath, setIndexPath] = useState(['item_0']);
+  const [indexPath, setIndexPath] = useState([currSelectedIdx || 'item_0']);
+
+  useEffect(() => {
+    setSelectIdx(props.selectedIndex);
+  }, [props.selectedIndex]);
 
   const menuDOMRef = useRef<HTMLUListElement>(null);
 
